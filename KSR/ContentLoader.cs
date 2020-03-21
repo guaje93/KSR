@@ -34,16 +34,20 @@ namespace KSR
             return true;
         }
 
-        private bool IsArticleValid(Article p) => p.Text.Count !=0 && places.Contains(p.Place);
+        private bool IsArticleValid(Article p) => p != null && p.Text.Count !=0 && places.Contains(p.Place);
 
         private Article GetArticleFromXml(string p)
         {
             var xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(p);
+            var content = xmlDocument.GetElementsByTagName("BODY")?.Item(0)?.InnerText;
+            if (content is null)
+                return null;
+            
             return new Article()
             {
                 Title = xmlDocument.GetElementsByTagName("TITLE")?.Item(0)?.InnerText,
-                Text = FilterWordsFromText(xmlDocument.GetElementsByTagName("BODY")?.Item(0)?.InnerText),
+                Text = FilterWordsFromText(content),
                 Place = xmlDocument.GetElementsByTagName("PLACES")?.Item(0)?.InnerText
             };
         }
