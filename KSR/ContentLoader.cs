@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StopWord;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,10 +32,9 @@ namespace KSR
             }
 
             return true;
-
         }
 
-        private bool IsArticleValid(Article p) => !string.IsNullOrEmpty(p.Text) && places.Contains(p.Place);
+        private bool IsArticleValid(Article p) => p.Text.Count !=0 && places.Contains(p.Place);
 
         private Article GetArticleFromXml(string p)
         {
@@ -43,9 +43,19 @@ namespace KSR
             return new Article()
             {
                 Title = xmlDocument.GetElementsByTagName("TITLE")?.Item(0)?.InnerText,
-                Text = xmlDocument.GetElementsByTagName("BODY")?.Item(0)?.InnerText,
+                Text = FilterWordsFromText(xmlDocument.GetElementsByTagName("BODY")?.Item(0)?.InnerText),
                 Place = xmlDocument.GetElementsByTagName("PLACES")?.Item(0)?.InnerText
             };
+        }
+
+        private List<string> FilterWordsFromText(string text)
+        {
+            var removedPuntuationMarks = Regex.Replace(text, @"[^a-zA-Z-\s]+", "");
+            var removeWhiteSpaces = Regex.Replace(removedPuntuationMarks, @"[\n\t]+", " ");
+            var removedStopWordsText = removeWhiteSpaces.ToLower().RemoveStopWords("en");
+            var removeReuterFromTextEnd = removedStopWordsText.Replace("Reuter", "", StringComparison.InvariantCultureIgnoreCase);
+            var words = removeReuterFromTextEnd.Split(' ','\n','\t').Where(p=> !string.IsNullOrEmpty(p)).Distinct();
+            return words.ToList();
         }
     }
 }

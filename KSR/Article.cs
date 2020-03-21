@@ -8,6 +8,6 @@ namespace KSR
     {
         public string Title { get; internal set; }
         public string Place { get; internal set; }
-        public string Text { get; internal set; }
+        public List<string >Text { get; internal set; }
     }
 }
