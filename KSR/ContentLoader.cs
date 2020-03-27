@@ -34,7 +34,7 @@ namespace KSR
             return true;
         }
 
-        private bool IsArticleValid(Article p) => p != null && p.Text.Count !=0 && places.Contains(p.Place);
+        private bool IsArticleValid(Article p) => p != null && p.FilteredWords.Count !=0 && places.Contains(p.Place);
 
         private Article GetArticleFromXml(string p)
         {
@@ -47,7 +47,8 @@ namespace KSR
             return new Article()
             {
                 Title = xmlDocument.GetElementsByTagName("TITLE")?.Item(0)?.InnerText,
-                Text = FilterWordsFromText(content),
+                AllWords = content,
+                FilteredWords = FilterWordsFromText(content),
                 Place = xmlDocument.GetElementsByTagName("PLACES")?.Item(0)?.InnerText
             };
         }
