@@ -16,8 +16,7 @@ namespace KSR
 
         public T Extract(IList<string> text, string country) => 
                    (T)Convert.ChangeType(text.Where(p => !string.IsNullOrWhiteSpace(p))
-                                             .Where(p => Keywords[country]
-                                             .Contains(p))
+                                             .Where(p => Keywords[country].Contains(p))
                                              .Count(), typeof(T));
     }
 }

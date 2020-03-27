@@ -36,7 +36,7 @@ namespace KSR
                     MostPopularFirstLetter = new MostPopularFirstLetterExtractor<string>().Extract(article.AllWords, article.Place),
                     TextLength = new TextLengthExtractor<int>().Extract(article.AllWords, article.Place),
                     UniqueWords = new UniqueWordsExtractor<int>().Extract(article.AllWords, article.Place),
-                    WordsLongerThan10 = new WordsLonerThan10Extractor<int>().Extract(article.AllWords, article.Place),
+                    WordsLongerThan10 = new WordsLongerThan10Extractor<int>().Extract(article.AllWords, article.Place),
 
                 }); ;
             }
