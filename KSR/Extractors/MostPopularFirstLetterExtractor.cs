@@ -10,6 +10,11 @@ namespace KSR.Extractors
         public T Extract(IList<string> text, string country) => (T)Convert.ChangeType(text.Select(p => p.Substring(0, 1))
                                                                                           .Where(p => char.IsUpper(p.First()))
                                                                                           .GroupBy(p => p)
-                                                                                          .Max(p => p.Count()), typeof(T));
+                                                                                          .Select(group => new
+                                                                                          {
+                                                                                              Key = group.Key,
+                                                                                              Count = group.Count()
+                                                                                          })
+                                                                                          .Max(p => p.Count), typeof(T));
     }
 }

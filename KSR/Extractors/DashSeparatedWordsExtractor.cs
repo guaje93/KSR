@@ -9,6 +9,6 @@ namespace KSR.Extractors
     class DashSeparatedWordsExtractor<T> : IMeanExtractor<T>
     {
         public T Extract(IList<string> text, string country) =>
-            (T)Convert.ChangeType(text.Where(p => Regex.IsMatch(@"\w*[-]\w*", p)), typeof(T));
+            (T)Convert.ChangeType(text.Where(p => Regex.IsMatch(p, @"\w*[-]\w*")).Count(), typeof(T));
     }
 }

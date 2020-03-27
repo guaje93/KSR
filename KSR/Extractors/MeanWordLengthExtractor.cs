@@ -8,6 +8,6 @@ namespace KSR.Extractors
     class MeanWordLengthExtractor<T> : IMeanExtractor<T>
     {
         public T Extract(IList<string> text, string country) => 
-            (T)Convert.ChangeType(text.Select(p => p.Length).Average(), typeof(T));
+            (T)Convert.ChangeType(Math.Round(text.Select(p => p.Length).Average(),1), typeof(T));
     }
 }

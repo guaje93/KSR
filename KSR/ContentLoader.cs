@@ -14,6 +14,8 @@ namespace KSR
         private List<Article> _articles = new List<Article>();
         private readonly string[] places = new string[] { "west-germany", "usa", "france", "uk", "canada", "japan" };
 
+        internal List<Article> Articles { get => _articles; private set => _articles = value; }
+
         public bool ReadFile(string directoryPath)
         {
 
@@ -25,7 +27,7 @@ namespace KSR
             {
                 var fileContent = File.ReadAllText(file);
                 var matches = Regex.Matches(fileContent, @"<REUTERS([\s\S]*?)</REUTERS>").Select(p => p.Groups[0].Value);
-                _articles = _articles.Concat(matches.AsParallel()
+                Articles = Articles.Concat(matches.AsParallel()
                                                     .Select(p => GetArticleFromXml(p))
                                                     .Where(p => IsArticleValid(p)))
                                                     .ToList();
@@ -47,7 +49,7 @@ namespace KSR
             return new Article()
             {
                 Title = xmlDocument.GetElementsByTagName("TITLE")?.Item(0)?.InnerText,
-                AllWords = content,
+                AllWords = content.Split('\n','\t',' ').Where(p => !string.IsNullOrEmpty(p)).ToList(),
                 FilteredWords = FilterWordsFromText(content),
                 Place = xmlDocument.GetElementsByTagName("PLACES")?.Item(0)?.InnerText
             };
