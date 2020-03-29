@@ -19,7 +19,7 @@ namespace KSR
         {
             var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\")); ;
             var contentLoader = new ContentLoader();
-            contentLoader.ReadFile(path+@"/reuters21578");
+            contentLoader.ReadFile(path+@"/Data");
 
 
             var vectors = new Dictionary<Article, AnalysisVector>();
