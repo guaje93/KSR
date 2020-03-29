@@ -16,7 +16,7 @@ namespace KSR.Extractors
 
 
         public T Extract(IList<string> text, string country) =>
-            (T)Convert.ChangeType(text.Where(p => Keywords[country].Where(kw => kw.Length >8).Contains(p))
+            (T)Convert.ChangeType(text.Where(p => Keywords[country].Where(kw => kw.Length>8).Contains(p))
                                        .Count(), typeof(T));
     }
 }
