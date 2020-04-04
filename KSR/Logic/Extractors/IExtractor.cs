@@ -4,8 +4,8 @@ using System.Text;
 
 namespace KSR
 {
-    interface IMeanExtractor<T>
+    interface IExtractor
     {
-        T Extract(IList<string> text, string country);
+        bool Extract();
     }
 }
