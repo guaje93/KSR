@@ -22,16 +22,20 @@ namespace KSR.Extractors
 
         public bool Extract()
         {
-            Result = Math.Round(_allText.Where(p => _keywords[_country].Contains(p))
-                                                  .Select(p => p.Length)
-                                                  .Average(), 1) / _allText.Count();
+            var temp = _allText.Where(p => _keywords[_country].Contains(p)).ToList();
+            if (temp.Count == 0)
+            {
+                Result = 0;
+                return true;
+            }
+            Result = Math.Round(temp.Select(p => p.Length).Average(), 1) *1.0 / _allText.Count();
 
             if (Result >= 0)
                 return true;
             return false;
 
         }
-                                   
+
 
     }
 }

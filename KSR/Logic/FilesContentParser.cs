@@ -28,10 +28,9 @@ namespace KSR
             {
                 var fileContent = File.ReadAllText(file);
                 var matches = Regex.Matches(fileContent, @"<REUTERS([\s\S]*?)</REUTERS>").Select(p => p.Groups[0].Value);
-                Articles = Articles.Concat(matches.AsParallel()
-                                                    .Select(p => GetArticleFromXml(p))
-                                                    .Where(p => IsArticleValid(p)))
-                                                    .ToList();
+                Articles = Articles.Concat(matches.Select(p => GetArticleFromXml(p))
+                                                   .Where(p => IsArticleValid(p)))
+                                                   .ToList();
             }
 
             if (Articles == null || Articles.Count() == 0)

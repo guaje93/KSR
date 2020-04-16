@@ -24,7 +24,7 @@ namespace KSR.Extractors
         {
             Result = _allText.Where(p => !string.IsNullOrWhiteSpace(p))
                                              .Where(p => _keywords[_country].Where(kw => kw.All(c => Char.IsUpper(c))).Contains(p))
-                                             .Count() / _allText.Count();
+                                             .Count() * 1.0 / _allText.Count();
             if (Result >= 0)
                 return true;
             return false;

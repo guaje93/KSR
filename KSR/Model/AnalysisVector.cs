@@ -6,24 +6,30 @@ namespace KSR
 {
     class AnalysisVector
     {
-        private int _dashSeparatedWords;
-        private int _firstCapitalShorterThan4;
-        private int _firstCapitalLenthFrom4To6;
-        private int _keyWordsAmount;
-        private double _meanWordLength;
-        private string _mostPopularFirstLetter;
-        private int _textLength;
-        private int _uniqueWords;
-        private int _wordsLongerThan10;
+        private double _keyWordsCountExtractor;
+        private double _meanKeyWordLengthExtractor;
+        private double _shorterThan4Extractor;
+        private double _lengthFrom4To6Extractor;
+        private double _longerThan8Extractor;
+        private double _dashSeparatedKeyWordsExtractor;
+        private double _firstKeywordPositionExtractor;
+        private bool _containsKeywordExtractor;
+        private double _keyWordsWithAllCapitalLettersExtractor;
+        private double _keyWordsStartedWithFirstCapitalExtractor;
+        private double _keyWordsStartedWithFirstLowerExtractor;
+        private double _UniqueWordsExtractor;
 
-        public int DashSeparatedWords { get => _dashSeparatedWords; set => _dashSeparatedWords = value; }
-        public int FirstCapitalShorterThan4 { get => _firstCapitalShorterThan4; set => _firstCapitalShorterThan4 = value; }
-        public int FirstCapitalLenthFrom4To6 { get => _firstCapitalLenthFrom4To6; set => _firstCapitalLenthFrom4To6 = value; }
-        public int KeyWordsAmount { get => _keyWordsAmount; set => _keyWordsAmount = value; }
-        public double MeanWordLength { get => _meanWordLength; set => _meanWordLength = value; }
-        public string MostPopularFirstLetter { get => _mostPopularFirstLetter; set => _mostPopularFirstLetter = value; }
-        public int TextLength { get => _textLength; set => _textLength = value; }
-        public int UniqueWords { get => _uniqueWords; set => _uniqueWords = value; }
-        public int WordsLongerThan10 { get => _wordsLongerThan10; set => _wordsLongerThan10 = value; }
+        public double KeyWordsCountExtractor { get => _keyWordsCountExtractor; set => _keyWordsCountExtractor = value; }
+        public double MeanKeyWordLengthExtractor { get => _meanKeyWordLengthExtractor; set => _meanKeyWordLengthExtractor = value; }
+        public double ShorterThan4Extractor { get => _shorterThan4Extractor; set => _shorterThan4Extractor = value; }
+        public double LengthFrom4To6Extractor { get => _lengthFrom4To6Extractor; set => _lengthFrom4To6Extractor = value; }
+        public double LongerThan8Extractor { get => _longerThan8Extractor; set => _longerThan8Extractor = value; }
+        public double DashSeparatedKeyWordsExtractor { get => _dashSeparatedKeyWordsExtractor; set => _dashSeparatedKeyWordsExtractor = value; }
+        public double FirstKeywordPositionExtractor { get => _firstKeywordPositionExtractor; set => _firstKeywordPositionExtractor = value; }
+        public bool ContainsKeywordExtractor { get => _containsKeywordExtractor; set => _containsKeywordExtractor = value; }
+        public double KeyWordsWithAllCapitalLettersExtractor { get => _keyWordsWithAllCapitalLettersExtractor; set => _keyWordsWithAllCapitalLettersExtractor = value; }
+        public double KeyWordsStartedWithFirstCapitalExtractor { get => _keyWordsStartedWithFirstCapitalExtractor; set => _keyWordsStartedWithFirstCapitalExtractor = value; }
+        public double KeyWordsStartedWithFirstLowerExtractor { get => _keyWordsStartedWithFirstLowerExtractor; set => _keyWordsStartedWithFirstLowerExtractor = value; }
+        public double UniqueWordsExtractor { get => _UniqueWordsExtractor; set => _UniqueWordsExtractor = value; }
     }
 }

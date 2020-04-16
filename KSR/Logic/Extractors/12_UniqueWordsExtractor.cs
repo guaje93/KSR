@@ -21,7 +21,7 @@ namespace KSR.Extractors
         public double Result = -1;
         public bool Extract()
         {
-            Result = _allText.Distinct().Count() / _allText.Count();
+            Result = _allText.Distinct().Count() * 1.0 / _allText.Count();
             if (Result >= 0)
                 return true;
             return false;

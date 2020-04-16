@@ -24,8 +24,12 @@ namespace KSR.Extractors
         public bool Extract()
         {
 
-           Result = _allText.Where(p => _keywords[_country].Where(kw => kw.Length>8).Contains(p))
-                                       .Count() / _allText.Count();
+           Result = _allText.Where(p => !string.IsNullOrWhiteSpace(p))
+                            .Where(p => _keywords[_country].Contains(p))
+                            .Where(p => p.Length > 8)
+                            .Select(p => p.Substring(0, 1))
+                            .Where(p => char.IsUpper(p.First()))
+                            .Count() * 1.0 / _allText.Count();
 
             if (Result >= 0)
                 return true;

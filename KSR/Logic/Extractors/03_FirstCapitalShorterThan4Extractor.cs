@@ -21,9 +21,12 @@ namespace KSR.Extractors
         public double Result = -1;
 
         public bool Extract() {
-            Result =  _allText.Select(p => p.Substring(0, 1))
-                              .Where(p => p.Length < 4 && char.IsUpper(p.First()))
-                              .Count() / _allText.Count();
+            Result = _allText.Where(p => !string.IsNullOrWhiteSpace(p))
+                             .Where(p => _keywords[_country].Contains(p))
+                             .Where(p => p.Length < 4)
+                             .Select(p => p.Substring(0, 1))
+                             .Where(p => char.IsUpper(p.First()))
+                             .Count() * 1.0 / _allText.Count();
             
             if (Result >= 0)
                 return true;

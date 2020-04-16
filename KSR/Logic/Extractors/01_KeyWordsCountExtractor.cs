@@ -22,10 +22,12 @@ namespace KSR
 
         public bool Extract()
         {
-            Result = (_allText.Where(p => !string.IsNullOrWhiteSpace(p))
+            var foundKeyWords = (_allText.Where(p => !string.IsNullOrWhiteSpace(p))
                                       .Where(p => _keywords[_country].Contains(p))
                                       .Distinct()
-                                      .Count()) / _keywords[_country].Distinct().Count();
+                                      .Count());
+
+            Result = foundKeyWords * 1.0 / _keywords[_country].Distinct().Count();
             if (Result >= 0)
                 return true;
             return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace KSR
@@ -11,5 +12,6 @@ namespace KSR
         public List<string> FilteredWords { get; internal set; }
         public List<string> AllWords { get; internal set; }
         public string Text { get; internal set; }
+
     }
 }

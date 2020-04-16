@@ -25,7 +25,7 @@ namespace KSR.Extractors
         {
             var firstKeyWord = _allText.FirstOrDefault(p => _keywords[_country].Contains(p));
             var firstKeywordPosition = _allText.IndexOf(firstKeyWord) + 1;
-            Result = firstKeywordPosition / _allText.Count();
+            Result = firstKeywordPosition * 1.0 / _allText.Count();
 
             if (Result >= 0)
                 return true;

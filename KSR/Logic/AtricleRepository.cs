@@ -1,4 +1,5 @@
-﻿using StopWord;
+﻿using Annytab.Stemmer;
+using StopWord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,27 @@ namespace KSR
 {
     public class AtricleRepository
     {
+        private readonly Stemmer englishStemmer = new EnglishStemmer();
+
         private List<Article> _articles;
         public List<Article> Articles
         {
             get => _articles;
             set => _articles = value;
         }
+
+
+        public List<Article> ArticlesForValidation
+        {
+            get;
+            private set;
+        } = new List<Article>();
+
+        public List<Article> ArticlesForLearning
+        {
+            get;
+            private set;
+        } = new List<Article>();
 
         public bool CompleteRepository(string directoryPath)
         {
@@ -35,6 +51,15 @@ namespace KSR
             if (!filterSuccess)
                 return false;
 
+            
+            foreach (var item in Articles.Select(p => p.Place).Distinct())
+            {
+                var articlesPerPlace = Articles.Where(p => p.Place == item);
+                ArticlesForLearning = ArticlesForLearning.Concat(articlesPerPlace.Take((int)(0.6 * articlesPerPlace.Count()))).ToList();
+            }
+
+            ArticlesForValidation = ArticlesForValidation.Where(p => !ArticlesForLearning.Contains(p)).ToList();
+
             return true;
         }
 
@@ -55,11 +80,18 @@ namespace KSR
         private List<string> FilterWordsFromText(string text)
         {
             var removedPuntuationMarks = Regex.Replace(text, @"[^a-zA-Z-\s]+", "");
-            var removeWhiteSpaces = Regex.Replace(removedPuntuationMarks, @"[\n\t]+", " ");
+            var removeWhiteSpaces = Regex.Replace(removedPuntuationMarks, @"[\r\n\t]+", " ");
+
             //stopWords
-            var removedStopWordsText = removeWhiteSpaces.ToLower().RemoveStopWords("en");
+            var removedStopWordsText = removeWhiteSpaces.RemoveStopWords("en");
             var removeReuterFromTextEnd = removedStopWordsText.Replace("Reuter", "", StringComparison.InvariantCultureIgnoreCase);
-            var words = removeReuterFromTextEnd.Split(' ', '\n', '\t').Where(p => !string.IsNullOrEmpty(p)).Distinct();
+            var words = removeReuterFromTextEnd.Split(' ').Where(p => !string.IsNullOrEmpty(p)).OrderBy(p => p).ToList();
+            words.RemoveAll(p => p.Equals("-") || p.Equals("--"));
+            
+            // Stemming 
+            for (int i = 0; i < words.Count(); i++)
+                words[i] = englishStemmer.GetSteamWord(words[i]);
+            
             return words.ToList();
         }
     }
