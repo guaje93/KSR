@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KSR
 {
-    class AnalysisVector
+    public class ExtractorVector
     {
         private double _keyWordsCountExtractor;
         private double _meanKeyWordLengthExtractor;

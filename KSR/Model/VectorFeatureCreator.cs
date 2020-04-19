@@ -36,7 +36,7 @@ namespace KSR.Model
                 var uniqueWordsExtractor = new UniqueWordsExtractor(keyWords, article.FilteredWords, article.Place);
                 uniqueWordsExtractor.Extract();
 
-                article.VectorFeatures = new AnalysisVector()
+                article.VectorFeatures = new ExtractorVector()
                 {
                     ContainsKeywordExtractor = containsKeywordExtractor.Result,
                     DashSeparatedKeyWordsExtractor = dashSeparatedKeyWordsExtractor.Result,

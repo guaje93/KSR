@@ -5,17 +5,26 @@ using System.Linq;
 
 namespace Logic.Metrics
 {
-    public class Manhattan : Metric
+    public class Manhattan : IMetric
     {
-        public override bool CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int k, string tag)
+
+        public void Calculate(List<Article> TrainingVectors, List<Article> TestVectors, int kNeighbours)
         {
-            double x = 0;
-            double y = 0;
+            for (int i = 0; i < TestVectors.Count; i++)
+            {
+                CalculateMetricForOneTestSet(TestVectors.ElementAt(i), TrainingVectors, kNeighbours);
+            }
+
+        }
+
+
+        public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
+        {
             double distance = 0;
             for (int i = 0; i < TrainingVectors.Count; i++)
             {
                 var resultList = new List<double>() {
-                   Math.Abs(testArticle.VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0) - (TrainingVectors.ElementAt(i).VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0),
+                   Math.Abs((testArticle.VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0) - (TrainingVectors.ElementAt(i).VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0)),
                    Math.Abs(testArticle.VectorFeatures.DashSeparatedKeyWordsExtractor - TrainingVectors.ElementAt(i).VectorFeatures.DashSeparatedKeyWordsExtractor),
                    Math.Abs(testArticle.VectorFeatures.FirstKeywordPositionExtractor - TrainingVectors.ElementAt(i).VectorFeatures.FirstKeywordPositionExtractor),
                    Math.Abs(testArticle.VectorFeatures.KeyWordsCountExtractor - TrainingVectors.ElementAt(i).VectorFeatures.KeyWordsCountExtractor),
@@ -30,11 +39,10 @@ namespace Logic.Metrics
             };
 
                 distance = resultList.Sum();
-                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance); 
-                distance = 0;
+                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
             }
-
-            return KnnAlgorithm.Calculate(testArticle, TrainingVectors, k, tag);
+            
+            KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
 
     }

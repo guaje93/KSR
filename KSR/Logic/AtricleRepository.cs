@@ -58,7 +58,7 @@ namespace KSR
                 ArticlesForLearning = ArticlesForLearning.Concat(articlesPerPlace.Take((int)(0.6 * articlesPerPlace.Count()))).ToList();
             }
 
-            ArticlesForValidation = ArticlesForValidation.Where(p => !ArticlesForLearning.Contains(p)).ToList();
+            ArticlesForValidation = Articles.Where(p => !ArticlesForLearning.Contains(p)).ToList();
 
             return true;
         }

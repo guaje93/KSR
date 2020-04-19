@@ -57,8 +57,8 @@ namespace KSR
             {
                 var articlesPerCountry = testArticles.Where(p => p.Place == item.Key).Count();
                 orderedFilteredKeyWords.Add(item.Key, item.Value
-                                                         .Where(p => p.Value > articlesPerCountry * 0.1 && p.Value < articlesPerCountry * 0.2)
-                                                         .OrderByDescending(p => p.Value)
+                                                         .Where(p => p.Value > item.Value.Count() * 0.05 && p.Value< item.Value.Count * 0.10)
+                                                         .OrderByDescending(p => p.Value).Take(20)
                                                          .ToDictionary(p => p.Key, g => g.Value));
             }
 

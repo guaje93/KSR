@@ -27,6 +27,12 @@ namespace KSR
                                       .Distinct()
                                       .Count());
 
+            if (foundKeyWords == 0)
+            {
+                Result = 0;
+            return true;
+            }
+
             Result = foundKeyWords * 1.0 / _keywords[_country].Distinct().Count();
             if (Result >= 0)
                 return true;
