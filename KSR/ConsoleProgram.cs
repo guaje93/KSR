@@ -2,6 +2,7 @@
 using KSR.Logic;
 using KSR.Model;
 using Logic.Metrics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,8 +15,7 @@ namespace KSR
     {
         static void Main(string[] args)
         {
-            var chosenMetric = "Euclidean";
-            var numberOfNeughbours =20;
+            var settings = ReadInitialValues();
            var articlesRepository =  ReadFile();
             var keyWords = new KeyWords(articlesRepository.ArticlesForLearning);
             var vectorFeatureCreator = new VectorFeatureCreator();
@@ -23,7 +23,7 @@ namespace KSR
             vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation, keyWords);
 
             var knnProcesor = new KnnProcessor();
-            knnProcesor.Calculate(chosenMetric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, numberOfNeughbours);
+            knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, settings.Neighbours);
             Console.Beep(800, 200);
         }
 
@@ -34,6 +34,16 @@ namespace KSR
             var articlesRepo = new AtricleRepository();
             articlesRepo.CompleteRepository(path + @"/Data");
             return articlesRepo;
+        }
+
+        public static Settings ReadInitialValues()
+        {
+            var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\AppSettings\Settings.json"));
+            using StreamReader file = File.OpenText(path);
+            JsonSerializer serializer = new JsonSerializer();
+            var settings = (Settings)serializer.Deserialize(file, typeof(Settings));
+           
+            return settings;
         }
 
     }
