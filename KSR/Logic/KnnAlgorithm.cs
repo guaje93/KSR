@@ -6,13 +6,14 @@ namespace Logic
 {
     public static class KnnAlgorithm
     {
-        // ChooseKNeighbours
-        public static void AssignCountry(Article testArticle, List<Article> TrainingArticles, int k)
+        public static void AssignCountry(Article testArticle, List<Article> TrainingArticles, int neighboursAmount)
         {
             TrainingArticles = TrainingArticles.OrderBy(h => h.Distance).ToList(); //sortuje
-            var neighbours = TrainingArticles.Take(k).ToList(); //bierze k sąsiadów
+            var neighbours = TrainingArticles.Take(neighboursAmount).ToList(); //bierze k sąsiadów
 
-            var result = neighbours.GroupBy(x => x.Place).Select(x => new { Country = x.Key, Count = x.Count() }).OrderByDescending(n => n.Count);
+            var result = neighbours.GroupBy(x => x.Place)
+                                   .Select(x => new { Country = x.Key, Count = x.Count() })
+                                   .OrderByDescending(n => n.Count);
 
             var results = new List<Result>();
 

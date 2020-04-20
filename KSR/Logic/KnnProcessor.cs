@@ -1,37 +1,42 @@
-﻿using KSR.Model;
+﻿using KSR.Logic.Metrics;
+using KSR.Model;
 using Logic.Metrics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace KSR.Logic
 {
     class KnnProcessor
     {
+        private IMetric _metric;
+        private string _outputPath = $@"C:\Users\{Environment.UserName}\Desktop\probki\Sample.txt";
+
         public void Calculate(string metric, List<Article> trainingArticles, List<Article> testArticles, int negihboursAmount)
         {
-            if (metric == "Manhattan")
+            SetMetric(metric);
+            _metric.Calculate(trainingArticles, testArticles, negihboursAmount);
+            CheckMatch(testArticles);
+        }
+
+        private void SetMetric(string metric)
+        {
+            
+            switch (metric)
             {
-                var manhatanMetric = new Manhattan();
-                manhatanMetric.Calculate(trainingArticles, testArticles, negihboursAmount);
-                CheckMatch(testArticles);
-            }
-            else if (metric == "Euclidean")
-            {
-                var euclideanMetric = new Euclidean();
-                euclideanMetric.Calculate(trainingArticles, testArticles, negihboursAmount);
-                CheckMatch(testArticles);
-            }
-            else
-            {
-                var chebyshevMetric = new Chebyshev();
-                chebyshevMetric.Calculate(trainingArticles, testArticles, negihboursAmount);
-                CheckMatch(testArticles);
+                case "Chebyshev":
+                    _metric = new Euclidean();
+                    break;
+                case "Euclidean":
+                    _metric = new Chebyshev();
+                    break;
+                case "Manhattan":
+                    _metric = new Manhattan();
+                    break;
             }
         }
 
-        private void CheckMatch(List<Article> testArticles)
+        private void CheckMatch(IEnumerable<Article> testArticles)
         {
             var classificationInfos = new List<ClassificationInfo>();
 
@@ -53,15 +58,21 @@ namespace KSR.Logic
                 });
             }
 
-            using var file = new System.IO.StreamWriter($@"C:\Users\{Environment.UserName}\Desktop\probki\Sample.txt");
+            System.IO.StreamWriter file = SaveFile(classificationInfos);
+        }
+
+        private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos)
+        {
+            var file = new System.IO.StreamWriter(_outputPath);
             foreach (var item in classificationInfos)
             {
-                Console.WriteLine("Done");
                 file.WriteLine("-------------------------");
                 file.WriteLine($"Country: {item.Country}");
                 file.WriteLine($"TotalArticles: {item.ArticlesAmount}");
                 file.WriteLine($"Classified Articles: {item.ClassifiedAmount}");
             }
+
+            return file;
         }
     }
 }

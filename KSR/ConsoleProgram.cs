@@ -24,6 +24,7 @@ namespace KSR
 
             var knnProcesor = new KnnProcessor();
             knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, settings.Neighbours);
+            
             Console.Beep(800, 200);
         }
 

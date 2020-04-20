@@ -5,7 +5,7 @@ using System.Text;
 
 namespace KSR
 {
-    public class FileLoader
+    public class SgmFileLoader
     {
         public string[] Files { get; private set; }
 

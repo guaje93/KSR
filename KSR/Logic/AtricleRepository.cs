@@ -11,13 +11,7 @@ namespace KSR
     {
         private readonly Stemmer englishStemmer = new EnglishStemmer();
 
-        private List<Article> _articles;
-        public List<Article> Articles
-        {
-            get => _articles;
-            set => _articles = value;
-        }
-
+        public List<Article> Articles { get; set; }
 
         public List<Article> ArticlesForValidation
         {
@@ -33,7 +27,7 @@ namespace KSR
 
         public bool CompleteRepository(string directoryPath)
         {
-            var fileLoader = new FileLoader();
+            var fileLoader = new SgmFileLoader();
             var fileParser = new FilesContentParser();
             
             

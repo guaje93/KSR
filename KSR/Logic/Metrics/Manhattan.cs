@@ -14,9 +14,7 @@ namespace Logic.Metrics
             {
                 CalculateMetricForOneTestSet(TestVectors.ElementAt(i), TrainingVectors, kNeighbours);
             }
-
         }
-
 
         public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
         {

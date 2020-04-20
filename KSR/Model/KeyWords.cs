@@ -18,21 +18,24 @@ namespace KSR
         public KeyWords(List<Article> testArticles)
         {
             Dictionary<string, Dictionary<string, int>> allWords = GetAllWordsPerCountry(testArticles);
-            Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
-            Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(orderedFilteredKeyWords);
-
-            var keyWordsThatExistInLessThen4CountriesDictionary = new Dictionary<string, Dictionary<string, int>>();
-            var keyWordsThatExistInLessThen4Countries = keyWordsAmount.Where(p => p.Value < 4).Select(p => p.Key).ToList();
-
-            foreach (var country in orderedFilteredKeyWords)
+            Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(allWords);
+            var wordsExtractedForLessThan3Countries = keyWordsAmount.Where(p => p.Value < 3).Select(p => p.Key).ToList();
+            
+            var keyWordsFilteredByUnique = new Dictionary<string, Dictionary<string, int>>();
+            foreach (var country in allWords)
             {
-                keyWordsThatExistInLessThen4CountriesDictionary.Add(country.Key, country.Value.Where(p => keyWordsThatExistInLessThen4Countries.Contains(p.Key)).ToDictionary(p => p.Key, g => g.Value ));
+                keyWordsFilteredByUnique.Add(country.Key, country.Value.Where(p => wordsExtractedForLessThan3Countries.Contains(p.Key))
+                                                                       .ToDictionary(p => p.Key, g => g.Value ));
             }
 
-            _keywordsList = keyWordsThatExistInLessThen4CountriesDictionary;
+            var keyWordsFilteredByAmount = FilterByAmountKeyWords(testArticles, keyWordsFilteredByUnique);
+
+
+            _keywordsList = keyWordsFilteredByAmount;
+
         }
 
-        private static Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords)
+        private Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords)
         {
             var keyWordsAmount = new Dictionary<string, int>();
             foreach (var item in orderedFilteredKeyWords)
@@ -50,7 +53,7 @@ namespace KSR
             return keyWordsAmount;
         }
 
-        private static Dictionary<string, Dictionary<string, int>> GetFilteredKeyWords(List<Article> testArticles, Dictionary<string, Dictionary<string, int>> allWords)
+        private Dictionary<string, Dictionary<string, int>> FilterByAmountKeyWords(List<Article> testArticles, Dictionary<string, Dictionary<string, int>> allWords)
         {
             var orderedFilteredKeyWords = new Dictionary<string, Dictionary<string, int>>();
             foreach (var item in allWords)
@@ -65,7 +68,7 @@ namespace KSR
             return orderedFilteredKeyWords;
         }
 
-        private static Dictionary<string, Dictionary<string, int>> GetAllWordsPerCountry(List<Article> testArticles)
+        private Dictionary<string, Dictionary<string, int>> GetAllWordsPerCountry(List<Article> testArticles)
         {
             var allWords = new Dictionary<string, Dictionary<string, int>>();
 
