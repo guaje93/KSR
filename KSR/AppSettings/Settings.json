@@ -1,5 +1,20 @@
 ﻿{
   "Metric": "Manhattan",
-  "Neighbours":10
-}
+  "Neighbours": "10",
+  "TrainingSet": 0.45,
 
+  "Measures": {
+    "KeyWordsCount": "False",
+    "MeanKeyWordLength": "False",
+    "FirstCapitalShorterThan4": "True",
+    "FirstCapitalLengthFrom4To6": "True",
+    "KeyWordsLongerThan8": "True",
+    "DashSeparatedKeyWords": "False",
+    "FirstKeywordPosition": "True",
+    "ContainsKeyWord": "True",
+    "KeyWordsWithAllCapitalLetters": "True",
+    "KeyWordsStartedWithFirstCapital": "True",
+    "KeyWordsStartedWithFirstLower": "True",
+    "UniqueWords": "False"
+  }
+}
