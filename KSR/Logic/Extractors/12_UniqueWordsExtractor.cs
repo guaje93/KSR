@@ -18,7 +18,7 @@ namespace KSR.Extractors
             _country = country;
         }
 
-        public double Result = -1;
+        public double Result = 0;
         public bool Extract()
         {
             Result = _allText.Distinct().Count() * 1.0 / _allText.Count();

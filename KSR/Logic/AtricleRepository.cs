@@ -1,4 +1,5 @@
 ﻿using Annytab.Stemmer;
+using KSR.Model;
 using StopWord;
 using System;
 using System.Collections.Generic;
@@ -51,16 +52,20 @@ namespace KSR
             if (!filterSuccess)
                 return false;
 
+            return true;
             
+
+        }
+
+        public void SetAmountOfArticlesInSets(Settings settings)
+        {
             foreach (var item in Articles.Select(p => p.Place).Distinct())
             {
                 var articlesPerPlace = Articles.Where(p => p.Place == item);
-                ArticlesForLearning = ArticlesForLearning.Concat(articlesPerPlace.Take((int)(0.6 * articlesPerPlace.Count()))).ToList();
+                ArticlesForLearning = ArticlesForLearning.Concat(articlesPerPlace.Take((int)(settings.TrainingSet * articlesPerPlace.Count()))).ToList();
             }
 
             ArticlesForValidation = Articles.Where(p => !ArticlesForLearning.Contains(p)).ToList();
-
-            return true;
         }
 
         private bool ExtractAndFilterWords()

@@ -16,11 +16,12 @@ namespace KSR
         static void Main(string[] args)
         {
             var settings = ReadInitialValues();
-           var articlesRepository =  ReadFile();
+            var articlesRepository =  ReadFile();
+            articlesRepository.SetAmountOfArticlesInSets(settings);
             var keyWords = new KeyWords(articlesRepository.ArticlesForLearning);
             var vectorFeatureCreator = new VectorFeatureCreator();
-            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForLearning, keyWords);
-            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation, keyWords);
+            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForLearning, keyWords, settings);
+            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation, keyWords, settings);
 
             var knnProcesor = new KnnProcessor();
             knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, settings.Neighbours);
@@ -30,7 +31,7 @@ namespace KSR
 
         public static AtricleRepository ReadFile()
         {
-            var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\")); ;
+            var path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
             var articlesRepo = new AtricleRepository();
             articlesRepo.CompleteRepository(path + @"/Data");
             return articlesRepo;
