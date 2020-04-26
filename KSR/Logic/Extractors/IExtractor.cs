@@ -6,6 +6,6 @@ namespace KSR
 {
     interface IExtractor
     {
-        bool Extract();
+        void Extract(IList<string> keywords, IList<string> textWords);
     }
 }

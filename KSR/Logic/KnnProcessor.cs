@@ -21,7 +21,7 @@ namespace KSR.Logic
 
         private void SetMetric(string metric)
         {
-            
+
             switch (metric)
             {
                 case "Chebyshev":
@@ -42,23 +42,23 @@ namespace KSR.Logic
 
             Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
             var grouppedPlaces = testArticles.GroupBy(x => x.Place); ;
+            var assigned = new Dictionary<string, int>();
             foreach (var group in grouppedPlaces)
             {
-                var counter = 0;
-                foreach (var item in group)
-                {
-                    if (item.AssignedPlace == group.Key)
-                        counter++;
-                }
+                assigned.Add(group.Key, testArticles.Where(p => p.AssignedPlace == group.Key).Count());
+            }
+
+            foreach (var group in grouppedPlaces)
+            {
                 classificationInfos.Add(new ClassificationInfo()
                 {
                     Country = group.Key,
                     ArticlesAmount = group.Count(),
-                    ClassifiedAmount = counter
+                    ClassifiedAmount = assigned[group.Key]
                 });
             }
+            using var file = SaveFile(classificationInfos);
 
-            System.IO.StreamWriter file = SaveFile(classificationInfos);
         }
 
         private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos)

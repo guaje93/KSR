@@ -7,24 +7,11 @@ namespace KSR.Extractors
 {
     class UniqueWordsExtractor : IExtractor
     {
-        private readonly IKeywords _keywords;
-        private readonly IList<string> _allText;
-        private readonly string _country;
-
-        public UniqueWordsExtractor(IKeywords keywords, IList<string> allText, string country)
-        {
-            _keywords = keywords;
-            _allText = allText;
-            _country = country;
-        }
 
         public double Result = 0;
-        public bool Extract()
+        public void Extract(IList<string> keywords, IList<string> textWords)
         {
-            Result = _allText.Distinct().Count() * 1.0 / _allText.Count();
-            if (Result >= 0)
-                return true;
-            return false;
+            Result = textWords.Distinct().Count() * 1.0 / textWords.Count();
         }
     }
 }

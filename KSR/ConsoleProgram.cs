@@ -19,14 +19,14 @@ namespace KSR
             var articlesRepository =  ReadFile();
             articlesRepository.SetAmountOfArticlesInSets(settings);
             var keyWords = new KeyWords(articlesRepository.ArticlesForLearning);
-            var vectorFeatureCreator = new VectorFeatureCreator();
-            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForLearning, keyWords, settings);
-            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation, keyWords, settings);
+            var vectorFeatureCreator = new VectorFeatureCreator(keyWords, settings);
+            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForLearning);
+            vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation);
 
             var knnProcesor = new KnnProcessor();
             knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, settings.Neighbours);
             
-            Console.Beep(800, 200);
+           // Console.Beep(800, 200);
         }
 
 
