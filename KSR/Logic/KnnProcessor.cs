@@ -10,7 +10,7 @@ namespace KSR.Logic
     class KnnProcessor
     {
         private IMetric _metric;
-        private string _outputPath = $@"C:\Users\{Environment.UserName}\Desktop\probki\Sample.txt";
+        private string _outputPath = $@"C:\Users\{Environment.UserName}\Desktop\probki\Sample_29.txt";
 
         public void Calculate(string metric, List<Article> trainingArticles, List<Article> testArticles, int negihboursAmount)
         {
@@ -40,21 +40,19 @@ namespace KSR.Logic
         {
             var classificationInfos = new List<ClassificationInfo>();
 
-            Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
             var grouppedPlaces = testArticles.GroupBy(x => x.Place); ;
-            var assigned = new Dictionary<string, int>();
-            foreach (var group in grouppedPlaces)
-            {
-                assigned.Add(group.Key, testArticles.Where(p => p.AssignedPlace == group.Key).Count());
-            }
-
             foreach (var group in grouppedPlaces)
             {
                 classificationInfos.Add(new ClassificationInfo()
                 {
                     Country = group.Key,
                     ArticlesAmount = group.Count(),
-                    ClassifiedAmount = assigned[group.Key]
+                    Canada = group.Where(p => p.AssignedPlace == "canada").Count(),
+                    France = group.Where(p => p.AssignedPlace == "france").Count(),
+                    Usa = group.Where(p => p.AssignedPlace == "usa").Count(),
+                    Japan = group.Where(p => p.AssignedPlace == "japan").Count(),
+                    Uk = group.Where(p => p.AssignedPlace == "uk").Count(),
+                    West_germany = group.Where(p => p.AssignedPlace == "west-germany").Count(),
                 });
             }
             using var file = SaveFile(classificationInfos);
@@ -69,7 +67,13 @@ namespace KSR.Logic
                 file.WriteLine("-------------------------");
                 file.WriteLine($"Country: {item.Country}");
                 file.WriteLine($"TotalArticles: {item.ArticlesAmount}");
-                file.WriteLine($"Classified Articles: {item.ClassifiedAmount}");
+                file.WriteLine($"Canada: {item.Canada}");
+                file.WriteLine($"France: {item.France}");
+                file.WriteLine($"Usa: {item.Usa}");
+                file.WriteLine($"Japan: {item.Japan}");
+                file.WriteLine($"Uk: {item.Uk}");
+                file.WriteLine($"West_germany: {item.West_germany}");
+                file.WriteLine("-------------------------");
             }
 
             return file;
