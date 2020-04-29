@@ -7,13 +7,11 @@ namespace KSR
 {
     public class KeyWords : IKeywords
     {
-        public Dictionary<string, Dictionary<string, int>> _keywordsList
+        public IList<string> Keywords
         {
             get;
             private set;
-        } = new Dictionary<string, Dictionary<string, int>>();
-
-        public IList<string> this[string country] => _keywordsList[country].Select(p => p.Key).ToList();
+        } = new List<string>();
 
         public KeyWords(List<Article> testArticles)
         {
@@ -21,15 +19,17 @@ namespace KSR
             Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
             Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(orderedFilteredKeyWords);
 
-            var keyWordsThatExistInLessThen4CountriesDictionary = new Dictionary<string, Dictionary<string, int>>();
-            var keyWordsThatExistInLessThen4Countries = keyWordsAmount.Where(p => p.Value < 4).Select(p => p.Key).ToList();
+            //var keyWordsThatExistInLessThen4CountriesDictionary = new Dictionary<string, Dictionary<string, int>>();
+            //var keyWordsThatExistInLessThen4Countries = keyWordsAmount.Where(p => p.Value < 4).Select(p => p.Key).ToList();
 
+            //foreach (var country in orderedFilteredKeyWords)
+            //{
+            //    keyWordsThatExistInLessThen4CountriesDictionary.Add(country.Key, country.Value.Where(p => keyWordsThatExistInLessThen4Countries.Contains(p.Key)).ToDictionary(p => p.Key, g => g.Value));
+            //}
             foreach (var country in orderedFilteredKeyWords)
             {
-                keyWordsThatExistInLessThen4CountriesDictionary.Add(country.Key, country.Value.Where(p => keyWordsThatExistInLessThen4Countries.Contains(p.Key)).ToDictionary(p => p.Key, g => g.Value));
+                Keywords = Keywords.Concat(country.Value.Keys.Take(20)).ToList();
             }
-
-            _keywordsList = keyWordsThatExistInLessThen4CountriesDictionary;
         }
 
         private static Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords)
@@ -57,8 +57,8 @@ namespace KSR
             {
                 var articlesPerCountry = testArticles.Where(p => p.Place == item.Key).Count();
                 orderedFilteredKeyWords.Add(item.Key, item.Value
-                                                         .Where(p => p.Value > item.Value.Count() * 0.05 && p.Value < item.Value.Count * 0.20)
-                                                         .OrderByDescending(p => p.Value).Take(20)
+                                                         .Where(p => p.Value > item.Value.Count() * 0.02 && p.Value < item.Value.Count * 0.25)
+                                                         .OrderByDescending(p => p.Value)
                                                          .ToDictionary(p => p.Key, g => g.Value));
             }
 

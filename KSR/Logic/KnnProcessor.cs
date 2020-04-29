@@ -41,7 +41,7 @@ namespace KSR.Logic
             var classificationInfos = new List<ClassificationInfo>();
 
             Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
-            var grouppedPlaces = testArticles.GroupBy(x => x.Place); ;
+            var grouppedPlaces = testArticles.GroupBy(x => x.Place);
             var assigned = new Dictionary<string, int>();
             foreach (var group in grouppedPlaces)
             {
