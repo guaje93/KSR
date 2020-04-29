@@ -24,7 +24,7 @@ namespace KSR
             vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation);
 
             var knnProcesor = new KnnProcessor();
-            knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForValidation, articlesRepository.ArticlesForLearning, settings.Neighbours);
+            knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForLearning, articlesRepository.ArticlesForValidation, settings.Neighbours);
             
            // Console.Beep(800, 200);
         }
