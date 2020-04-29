@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace KSR.Model
 {
+    [DebuggerDisplay("Country = {Country}, True = {TrueNegative}, Recall = {Recall}")]
     public class ClassificationInfo
     {
         public string Country;

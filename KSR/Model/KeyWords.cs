@@ -19,16 +19,25 @@ namespace KSR
             Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
             Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(orderedFilteredKeyWords);
 
-            //var keyWordsThatExistInLessThen4CountriesDictionary = new Dictionary<string, Dictionary<string, int>>();
-            //var keyWordsThatExistInLessThen4Countries = keyWordsAmount.Where(p => p.Value < 4).Select(p => p.Key).ToList();
+            Dictionary<string, int> wordInDifferentCountries = new Dictionary<string, int>();
 
-            //foreach (var country in orderedFilteredKeyWords)
-            //{
-            //    keyWordsThatExistInLessThen4CountriesDictionary.Add(country.Key, country.Value.Where(p => keyWordsThatExistInLessThen4Countries.Contains(p.Key)).ToDictionary(p => p.Key, g => g.Value));
-            //}
             foreach (var country in orderedFilteredKeyWords)
             {
-                Keywords = Keywords.Concat(country.Value.Keys.Take(20)).ToList();
+                foreach (var word in country.Value)
+                {
+                    if (wordInDifferentCountries.ContainsKey(word.Key))
+                        wordInDifferentCountries[word.Key] += 1;
+                    else wordInDifferentCountries.Add(word.Key, 1);
+
+                }
+            }
+
+
+            var keyWordsThatExistInLessThen4Countries = wordInDifferentCountries.Where(p => p.Value < 2 ).Select(p => p.Key).ToList();
+            var filtered = orderedFilteredKeyWords.ToDictionary(p => p.Key, q => q.Value.Select(p => p.Key).Where(p => keyWordsThatExistInLessThen4Countries.Contains(p)));
+            foreach (var country in filtered) 
+            {
+                Keywords = Keywords.Concat(country.Value.Take(20)).ToList();
             }
         }
 
