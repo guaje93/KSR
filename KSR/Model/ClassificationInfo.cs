@@ -16,5 +16,7 @@ namespace KSR.Model
         public int Canada;
         public int Uk;
 
+        public int TrueNegative { get; internal set; }
+        public double Recall { get; internal set; }
     }
 }

@@ -43,6 +43,8 @@ namespace KSR.Logic
             Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
             var grouppedPlaces = testArticles.GroupBy(x => x.Place);
             var assigned = new Dictionary<string, int>();
+            var FalsePositive = new Dictionary<string, int>();
+            var TruePositive = new Dictionary<string, int>();
             foreach (var group in grouppedPlaces)
             {
                 classificationInfos.Add(new ClassificationInfo()
@@ -55,13 +57,38 @@ namespace KSR.Logic
                     Japan = group.Where(p => p.AssignedPlace == "japan").Count(),
                     Uk = group.Where(p => p.AssignedPlace == "uk").Count(),
                     West_germany = group.Where(p => p.AssignedPlace == "west-germany").Count(),
+                    TrueNegative = group.Count() - group.Where(p => p.AssignedPlace == group.Key).Count(),
+                    Recall = group.Where(p => p.AssignedPlace == group.Key).Count() * 1.0 / group.Count(),
                 });
+                foreach (var country in grouppedPlaces.Select(p => p.Key).Distinct())
+                {
+                    if (FalsePositive.ContainsKey(country))
+                        FalsePositive[country] += group.Where(p => p.AssignedPlace != group.Key && p.AssignedPlace == country).Count();
+                    else FalsePositive.Add(country, group.Where(p => p.AssignedPlace != group.Key && p.AssignedPlace == country).Count());
+                }
+                foreach (var country in grouppedPlaces.Select(p => p.Key).Distinct())
+                {
+                    if (TruePositive.ContainsKey(country))
+                        TruePositive[country] += group.Where(p => p.AssignedPlace == country && country == group.Key).Count();
+                    else TruePositive.Add(country, group.Where(p => p.AssignedPlace == country && country == group.Key).Count());
+                }
             }
-            using var file = SaveFile(classificationInfos);
+
+            List<(string, int, int, double)> Values = new List<(string, int, int, double)>();
+            foreach (var item in grouppedPlaces)
+            {
+                var trues = TruePositive.FirstOrDefault(p => p.Key == item.Key).Value;
+                var falses = FalsePositive.FirstOrDefault(p => p.Key == item.Key).Value;
+                Values.Add((item.Key, trues, falses, 1.0 * trues / (trues + falses)));
+            }
+
+
+
+            using var file = SaveFile(classificationInfos, Values);
 
         }
 
-        private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos)
+        private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos, List<(string country, int trues, int falses, double prescision)> values)
         {
             var file = new System.IO.StreamWriter(_outputPath);
             foreach (var item in classificationInfos)
@@ -75,6 +102,20 @@ namespace KSR.Logic
                 file.WriteLine($"Japan: {item.Japan}");
                 file.WriteLine($"Uk: {item.Uk}");
                 file.WriteLine($"West_germany: {item.West_germany}");
+                file.WriteLine($"TrueNegative : {item.TrueNegative}");
+                file.WriteLine($"Recall: {item.Recall}");
+                file.WriteLine("-------------------------");
+            }
+
+            foreach (var item in values)
+            {
+                file.WriteLine("-------------------------");
+                file.WriteLine("-------------------------");
+                file.WriteLine("-------------------------");
+                file.WriteLine($"Country: {item.country}");
+                file.WriteLine($"TruePositive: {item.trues}");
+                file.WriteLine($"FalsePositive: {item.falses}");
+                file.WriteLine($"Precision: {item.prescision}");
                 file.WriteLine("-------------------------");
             }
 
