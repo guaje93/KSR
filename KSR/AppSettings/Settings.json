@@ -4,17 +4,17 @@
   "TrainingSet": 0.45,
 
   "Measures": {
-    "KeyWordsCount": "False",
-    "MeanKeyWordLength": "False",
+    "KeyWordsCount": "True",
+    "MeanKeyWordLength": "True",
     "FirstCapitalShorterThan4": "True",
     "FirstCapitalLengthFrom4To6": "True",
     "KeyWordsLongerThan8": "True",
-    "DashSeparatedKeyWords": "False",
+    "DashSeparatedKeyWords": "True",
     "FirstKeywordPosition": "True",
     "ContainsKeyWord": "True",
     "KeyWordsWithAllCapitalLetters": "True",
     "KeyWordsStartedWithFirstCapital": "True",
     "KeyWordsStartedWithFirstLower": "True",
-    "UniqueWords": "False"
+    "UniqueWords": "True"
   }
 }

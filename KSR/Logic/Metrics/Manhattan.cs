@@ -14,6 +14,8 @@ namespace Logic.Metrics
             {
                 CalculateMetricForOneTestSet(TestVectors.ElementAt(i), TrainingVectors, kNeighbours);
             }
+
+            var test = TrainingVectors.GroupBy(p => p.Distance);
         }
 
         public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
@@ -22,7 +24,7 @@ namespace Logic.Metrics
             for (int i = 0; i < TrainingVectors.Count; i++)
             {
                 var resultList = new List<double>() {
-                   Math.Abs((testArticle.VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0) - (TrainingVectors.ElementAt(i).VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0)),
+                   //Math.Abs((testArticle.VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0) - (TrainingVectors.ElementAt(i).VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0)),
                    Math.Abs(testArticle.VectorFeatures.DashSeparatedKeyWordsExtractor - TrainingVectors.ElementAt(i).VectorFeatures.DashSeparatedKeyWordsExtractor),
                    Math.Abs(testArticle.VectorFeatures.FirstKeywordPositionExtractor - TrainingVectors.ElementAt(i).VectorFeatures.FirstKeywordPositionExtractor),
                    Math.Abs(testArticle.VectorFeatures.KeyWordsCountExtractor - TrainingVectors.ElementAt(i).VectorFeatures.KeyWordsCountExtractor),

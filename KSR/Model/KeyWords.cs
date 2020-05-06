@@ -15,8 +15,8 @@ namespace KSR
 
         public KeyWords(List<Article> testArticles)
         {
-            Dictionary<string, Dictionary<string, int>> allWords = GetAllWordsPerCountry(testArticles);
-            Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
+            Dictionary<string, Dictionary<string, double>> allWords = GetAllWordsPerCountry(testArticles);
+            Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
             Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(orderedFilteredKeyWords);
 
             Dictionary<string, int> wordInDifferentCountries = new Dictionary<string, int>();
@@ -37,11 +37,11 @@ namespace KSR
             var filtered = orderedFilteredKeyWords.ToDictionary(p => p.Key, q => q.Value.Select(p => p.Key).Where(p => keyWordsThatExistInLessThen4Countries.Contains(p)));
             foreach (var country in filtered) 
             {
-                Keywords = Keywords.Concat(country.Value.Take(20)).ToList();
+                Keywords = Keywords.Concat(country.Value.Take(100)).ToList();
             }
         }
 
-        private static Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, int>> orderedFilteredKeyWords)
+        private static Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords)
         {
             var keyWordsAmount = new Dictionary<string, int>();
             foreach (var item in orderedFilteredKeyWords)
@@ -59,14 +59,13 @@ namespace KSR
             return keyWordsAmount;
         }
 
-        private static Dictionary<string, Dictionary<string, int>> GetFilteredKeyWords(List<Article> testArticles, Dictionary<string, Dictionary<string, int>> allWords)
+        private static Dictionary<string, Dictionary<string, double>> GetFilteredKeyWords(List<Article> testArticles, Dictionary<string, Dictionary<string, double>> allWords)
         {
-            var orderedFilteredKeyWords = new Dictionary<string, Dictionary<string, int>>();
+            var orderedFilteredKeyWords = new Dictionary<string, Dictionary<string, double>>();
             foreach (var item in allWords)
             {
-                var articlesPerCountry = testArticles.Where(p => p.Place == item.Key).Count();
                 orderedFilteredKeyWords.Add(item.Key, item.Value
-                                                         .Where(p => p.Value > item.Value.Count() * 0.02 && p.Value < item.Value.Count * 0.25)
+                                                         .Where(p => p.Key.Length > 5)
                                                          .OrderByDescending(p => p.Value)
                                                          .ToDictionary(p => p.Key, g => g.Value));
             }
@@ -74,15 +73,15 @@ namespace KSR
             return orderedFilteredKeyWords;
         }
 
-        private static Dictionary<string, Dictionary<string, int>> GetAllWordsPerCountry(List<Article> testArticles)
+        private static Dictionary<string, Dictionary<string, double>> GetAllWordsPerCountry(List<Article> testArticles)
         {
-            var allWords = new Dictionary<string, Dictionary<string, int>>();
+            var allWords = new Dictionary<string, Dictionary<string, double>>();
 
-            Dictionary<string, int> keyWordsDict = null;
+            Dictionary<string, double> keyWordsDict = null;
 
             foreach (var article in testArticles)
             {
-                keyWordsDict = article.FilteredWords.GroupBy(p => p).ToDictionary(p => p.Key, g => g.Count());
+                keyWordsDict = article.FilteredWords.GroupBy(p => p).ToDictionary(p => p.Key, g => 1.0 * g.Count()/article.AllWords.Count());
 
                 if (allWords.ContainsKey(article.Place))
                 {
