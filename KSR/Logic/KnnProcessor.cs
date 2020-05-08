@@ -24,16 +24,17 @@ namespace KSR.Logic
             switch (metric)
             {
                 case "Chebyshev":
-                    _metric = new Euclidean();
+                    _metric = new Chebyshev();
                     break;
                 case "Euclidean":
-                    _metric = new Chebyshev();
+                    _metric = new Euclidean();
                     break;
                 case "Manhattan":
                     _metric = new Manhattan();
                     break;
             }
         }
+        
 
         private void CheckMatch(IEnumerable<Article> testArticles)
         {
