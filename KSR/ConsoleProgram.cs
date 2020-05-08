@@ -1,13 +1,8 @@
-﻿using KSR.Extractors;
-using KSR.Logic;
+﻿using KSR.Logic;
 using KSR.Model;
-using Logic.Metrics;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace KSR
 {
@@ -16,7 +11,7 @@ namespace KSR
         static void Main(string[] args)
         {
             var settings = ReadInitialValues();
-            var articlesRepository =  ReadFile();
+            var articlesRepository = ReadFile();
             articlesRepository.SetAmountOfArticlesInSets(settings);
             var keyWords = new KeyWords(articlesRepository.ArticlesForLearning);
             var vectorFeatureCreator = new VectorFeatureCreator(keyWords, settings);
@@ -25,8 +20,8 @@ namespace KSR
 
             var knnProcesor = new KnnProcessor();
             knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForLearning, articlesRepository.ArticlesForValidation, settings.Neighbours);
-            
-           // Console.Beep(800, 200);
+
+            Console.Beep(800, 200);
         }
 
 
@@ -44,7 +39,7 @@ namespace KSR
             using StreamReader file = File.OpenText(path);
             JsonSerializer serializer = new JsonSerializer();
             var settings = (Settings)serializer.Deserialize(file, typeof(Settings));
-           
+
             return settings;
         }
 

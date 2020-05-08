@@ -38,11 +38,11 @@ namespace Logic.Metrics
             };
 
                 distance = resultList.Sum();
-            
-                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance); 
+
+                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
             }
 
-             KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
+            KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
     }
 }

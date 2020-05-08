@@ -1,7 +1,7 @@
 ﻿{
   "Metric": "Manhattan",
-  "Neighbours": "10",
-  "TrainingSet": 0.45,
+  "Neighbours": "5",
+  "TrainingSet": 0.4,
 
   "Measures": {
     "KeyWordsCount": "True",

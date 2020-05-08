@@ -20,7 +20,7 @@ namespace Logic.Metrics
             long maxResult = 0;
             long distance = 0;
 
-            for (int i = 0; i < TrainingVectors.Count; i++) 
+            for (int i = 0; i < TrainingVectors.Count; i++)
             {
                 var resultList = new List<double>() {
                    Math.Abs((testArticle.VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0) - (TrainingVectors.ElementAt(i).VectorFeatures.ContainsKeywordExtractor == true ? 1 : 0)),
@@ -37,7 +37,7 @@ namespace Logic.Metrics
                    Math.Abs(testArticle.VectorFeatures.UniqueWordsExtractor - TrainingVectors.ElementAt(i).VectorFeatures.UniqueWordsExtractor)
             };
 
-                foreach(var result in resultList)
+                foreach (var result in resultList)
                 {
                     if (distance < result)
                         distance = (long)result;
@@ -48,7 +48,7 @@ namespace Logic.Metrics
                 maxResult = 0;
             }
 
-             KnnAlgorithm.AssignCountry(testArticle,TrainingVectors, kNeighbours);
+            KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
     }
 }

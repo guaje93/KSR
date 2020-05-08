@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KSR.Model
+﻿namespace KSR.Model
 {
     public class Measures
     {

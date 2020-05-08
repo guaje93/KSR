@@ -1,8 +1,5 @@
 ﻿using KSR.Extractors;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KSR.Model
 {
@@ -19,7 +16,8 @@ namespace KSR.Model
         public void CreateVectorFeature(List<Article> articles)
         {
 
-            Parallel.ForEach(articles,(article) =>
+            foreach (var article in articles)
+            //Parallel.ForEach(articles,(article) =>
             {
                 var keyWordsCountExtractor = new KeyWordsCountExtractor();
                 if (_settings.Measures.KeyWordsCount)
@@ -85,7 +83,7 @@ namespace KSR.Model
                     UniqueWordsExtractor = uniqueWordsExtractor.Result,
 
                 };
-            });
-        }     
+            };
+        }
     }
 }

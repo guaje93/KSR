@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace KSR
 {
@@ -33,11 +31,11 @@ namespace KSR
             }
 
 
-            var keyWordsThatExistInLessThen4Countries = wordInDifferentCountries.Where(p => p.Value < 2 ).Select(p => p.Key).ToList();
+            var keyWordsThatExistInLessThen4Countries = wordInDifferentCountries.Where(p => p.Value < 6).Select(p => p.Key).ToList();
             var filtered = orderedFilteredKeyWords.ToDictionary(p => p.Key, q => q.Value.Select(p => p.Key).Where(p => keyWordsThatExistInLessThen4Countries.Contains(p)));
-            foreach (var country in filtered) 
+            foreach (var country in filtered)
             {
-                Keywords = Keywords.Concat(country.Value.Take(100)).ToList();
+                Keywords = Keywords.Concat(country.Value.Take(5)).ToList();
             }
         }
 
@@ -70,6 +68,17 @@ namespace KSR
                                                          .ToDictionary(p => p.Key, g => g.Value));
             }
 
+
+            //var wordsAndamount = new Dictionary<string, int>();
+            //foreach(var item in orderedFilteredKeyWords)
+            //{
+            //    //foreach(var item.Key in item){
+
+            //    //var amount = testArticles.Where(x => x.AllWords.Contains(item.Key)).Count();
+            //    //wordsAndamount.Add(i)
+            //    //}
+            //}
+
             return orderedFilteredKeyWords;
         }
 
@@ -81,7 +90,7 @@ namespace KSR
 
             foreach (var article in testArticles)
             {
-                keyWordsDict = article.FilteredWords.GroupBy(p => p).ToDictionary(p => p.Key, g => 1.0 * g.Count()/article.AllWords.Count());
+                keyWordsDict = article.FilteredWords.GroupBy(p => p).ToDictionary(p => p.Key, g => 1.0 * g.Count() / article.AllWords.Count());
 
                 if (allWords.ContainsKey(article.Place))
                 {

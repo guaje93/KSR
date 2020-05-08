@@ -1,5 +1,4 @@
-﻿using KSR.Logic.Metrics;
-using KSR.Model;
+﻿using KSR.Model;
 using Logic.Metrics;
 using System;
 using System.Collections.Generic;

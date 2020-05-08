@@ -30,8 +30,8 @@ namespace KSR
         {
             var fileLoader = new SgmFileLoader();
             var fileParser = new FilesContentParser();
-            
-            
+
+
             var readSuccess = fileLoader.ReadFiles(directoryPath);
             if (!readSuccess)
                 return false;
@@ -47,7 +47,7 @@ namespace KSR
                 return false;
 
             return true;
-            
+
 
         }
 
@@ -74,7 +74,7 @@ namespace KSR
                 return false;
             return true;
         }
-        
+
 
         private List<string> FilterWordsFromText(string text)
         {
@@ -86,11 +86,11 @@ namespace KSR
             var removeReuterFromTextEnd = removedStopWordsText.Replace("Reuter", "", StringComparison.InvariantCultureIgnoreCase);
             var words = removeReuterFromTextEnd.Split(' ').Where(p => !string.IsNullOrEmpty(p)).OrderBy(p => p).ToList();
             words.RemoveAll(p => p.Equals("-") || p.Equals("--"));
-            
+
             // Stemming 
             for (int i = 0; i < words.Count(); i++)
                 words[i] = englishStemmer.GetSteamWord(words[i]);
-            
+
             return words.ToList();
         }
     }

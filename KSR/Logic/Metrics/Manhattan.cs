@@ -41,7 +41,7 @@ namespace Logic.Metrics
                 distance = resultList.Sum();
                 TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
             }
-            
+
             KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
 

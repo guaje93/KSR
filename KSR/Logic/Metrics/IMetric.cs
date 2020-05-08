@@ -1,6 +1,5 @@
 ﻿using KSR;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Logic.Metrics
 {
