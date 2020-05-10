@@ -1,6 +1,6 @@
 ﻿{
   "Metric": "Manhattan",
-  "Neighbours": "5",
+  "Neighbours": "3",
   "TrainingSet": 0.4,
 
   "Measures": {

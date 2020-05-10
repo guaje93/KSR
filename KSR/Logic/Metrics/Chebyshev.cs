@@ -17,9 +17,6 @@ namespace Logic.Metrics
 
         public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
         {
-            long maxResult = 0;
-            long distance = 0;
-
             for (int i = 0; i < TrainingVectors.Count; i++)
             {
                 var resultList = new List<double>() {
@@ -36,16 +33,8 @@ namespace Logic.Metrics
                    Math.Abs(testArticle.VectorFeatures.ShorterThan4Extractor - TrainingVectors.ElementAt(i).VectorFeatures.ShorterThan4Extractor),
                    Math.Abs(testArticle.VectorFeatures.UniqueWordsExtractor - TrainingVectors.ElementAt(i).VectorFeatures.UniqueWordsExtractor)
             };
-
-                foreach (var result in resultList)
-                {
-                    if (distance < result)
-                        distance = (long)result;
-                    maxResult = distance;
-                }
-
+                var maxResult = resultList.Max();
                 TrainingVectors.ElementAt(i).Distance = Math.Sqrt(maxResult);
-                maxResult = 0;
             }
 
             KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
