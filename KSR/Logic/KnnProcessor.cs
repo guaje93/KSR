@@ -41,15 +41,27 @@ namespace KSR.Logic
             var classificationInfos = new List<ClassificationInfo>();
 
             Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
-            var grouppedPlaces = testArticles.GroupBy(x => x.Place);
+            var grouppedPlaces = testArticles.GroupBy(x => x.Place).OrderBy(x=> x.Key);
             var assigned = new Dictionary<string, int>();
             var FalsePositive = new Dictionary<string, int>();
             var TruePositive = new Dictionary<string, int>();
+            var classInfo = new Dictionary<string, Dictionary<string, int>>();
             foreach (var group in grouppedPlaces)
             {
+                classInfo.Add(group.Key, new Dictionary<string, int>());
+                //classInfo[group.Key].Add("classified", group.Where(x => x.AssignedPlace == group.Key.ToLower()).Count());
+                classInfo[group.Key].Add("canada", group.Where(p => p.AssignedPlace == "canada").Count());
+                classInfo[group.Key].Add("france", group.Where(p => p.AssignedPlace == "france").Count());
+                classInfo[group.Key].Add("japan", group.Where(p => p.AssignedPlace == "japan").Count());
+                classInfo[group.Key].Add("uk", group.Where(p => p.AssignedPlace == "uk").Count());
+                classInfo[group.Key].Add("usa", group.Where(p => p.AssignedPlace == "usa").Count());
+                classInfo[group.Key].Add("west-germany", group.Where(p => p.AssignedPlace == "west-germany").Count());
+
+
                 classificationInfos.Add(new ClassificationInfo()
                 {
                     Country = group.Key,
+                    ClassifiedAmount = group.Where(x => x.AssignedPlace == group.Key.ToLower()).Count(),
                     ArticlesAmount = group.Count(),
                     Canada = group.Where(p => p.AssignedPlace == "canada").Count(),
                     France = group.Where(p => p.AssignedPlace == "france").Count(),
@@ -84,11 +96,11 @@ namespace KSR.Logic
 
 
 
-            using var file = SaveFile(classificationInfos, Values);
+            using var file = SaveFile(classificationInfos, Values, classInfo) ;
 
         }
 
-        private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos, List<(string country, int trues, int falses, double prescision)> values)
+        private System.IO.StreamWriter SaveFile(List<ClassificationInfo> classificationInfos, List<(string country, int trues, int falses, double prescision)> values, Dictionary<string, Dictionary<string, int>> clasinfo)
         {
             var file = new System.IO.StreamWriter(_outputPath);
             foreach (var item in classificationInfos)
@@ -118,6 +130,23 @@ namespace KSR.Logic
                 file.WriteLine($"Precision: {item.prescision}");
                 file.WriteLine("-------------------------");
             }
+
+
+            var resultString = string.Empty;
+            foreach (var item in clasinfo)
+            {
+                resultString += "\n";
+                resultString += $"{item.Key}";
+                foreach (var elem in item.Value)
+                {
+                    resultString += $" &{elem.Value}";
+                }
+                resultString += "\\\\";
+            }
+
+            file.WriteLine(resultString);
+
+
 
             return file;
         }
