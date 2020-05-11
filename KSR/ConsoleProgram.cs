@@ -19,7 +19,7 @@ namespace KSR
             vectorFeatureCreator.CreateVectorFeature(articlesRepository.ArticlesForValidation);
 
             var knnProcesor = new KnnProcessor();
-            knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForLearning, articlesRepository.ArticlesForValidation, settings.Neighbours);
+            knnProcesor.Calculate(settings.Metric, articlesRepository.ArticlesForLearning, articlesRepository.ArticlesForValidation, settings);
 
             Console.Beep(800, 200);
         }
