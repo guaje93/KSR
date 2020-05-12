@@ -11,7 +11,7 @@ namespace KSR
     {
         static void Main(string[] args)
         {
-            //GenerateAppSettingsJson();
+            GenerateAppSettingsJson();
             for (int i = 0; i < 90; i++)
             {
 

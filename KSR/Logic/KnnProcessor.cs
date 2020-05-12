@@ -97,11 +97,26 @@ namespace KSR.Logic
                 Values.Add((item.Key, trues, falses, 1.0 * trues / (trues + falses)));
             }
 
-            using var file = SaveFile(classificationInfos, Values, classInfo, settings);
-            using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
+          //  using var file = SaveFile(classificationInfos, Values, classInfo, settings);
+          //  using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
+            using var excelData = GenerateExcelData(Values, classInfo, settings);
 
         }
 
+        private System.IO.StreamWriter GenerateExcelData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        {
+            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_{settings.Neighbours}.csv";
+            var file = new System.IO.StreamWriter(path);
+
+            file.WriteLine("country,trues,falses,precision,falseNegative,recall");
+
+            foreach (var item in values)
+            {
+            file.WriteLine($"{item.country},{item.trues},{item.falses},{item.precision},{classInfo[item.country]["FN"]},{classInfo[item.country]["Recall"]}");
+            }
+
+            return file;
+        }
 
         private System.IO.StreamWriter GenerateLatexFormatTable(List<(string country, int trues, int falses, double prescision)> values, Dictionary<string, Dictionary<string, double>> clasinfo, Settings settings)
         {
