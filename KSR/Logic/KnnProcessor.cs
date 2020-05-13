@@ -2,6 +2,7 @@
 using Logic.Metrics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace KSR.Logic
@@ -99,16 +100,89 @@ namespace KSR.Logic
 
             using var file = SaveFile(classificationInfos, Values, classInfo, settings);
             using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
-            using var excelData = GenerateExcelData(Values, classInfo, settings);
+            using var pData = GeneratePrecisionData(Values, classInfo, settings);
+            using var rData = GenerateRecallData(Values, classInfo, settings);
+            using var aData = GenerateAccuracyData(Values, classInfo, settings);
 
         }
 
-        private System.IO.StreamWriter GenerateExcelData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        private System.IO.StreamWriter GeneratePrecisionData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
         {
-            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_{settings.Neighbours}.csv";
-            var file = new System.IO.StreamWriter(path);
+            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Precision.csv";
+            if (File.Exists(path))
+            {
+                string line = "";
+                string newText = "";
+                using (var readFile = new System.IO.StreamReader(path))
+                {
+                    line = readFile.ReadLine() + "," + settings.Neighbours;
+                    newText += line + "\n";
+                    foreach (var item in values)
+                    {
+                        line = readFile.ReadLine() + "," + item.precision;
+                        newText += line + "\n";
 
-            file.WriteLine("country,TP,FP,FN,TN,accuracy,precision,recall");
+                    }
+                }
+                var file = new System.IO.StreamWriter(path);
+                file.Write(newText);
+                return file;
+
+            }
+            else
+            {
+                var file = new System.IO.StreamWriter(path);
+
+                file.WriteLine($"country,{settings.Neighbours}");
+                foreach (var item in values)
+                {
+                    file.WriteLine($"{item.country},{item.precision}");
+                }
+
+                return file;
+            }
+        }
+
+        private System.IO.StreamWriter GenerateRecallData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        {
+            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Recall.csv";
+
+            if (File.Exists(path))
+            {
+                string line = "";
+                string newText = "";
+                using (var readFile = new System.IO.StreamReader(path))
+                {
+                    line = readFile.ReadLine() + "," + settings.Neighbours;
+                    newText += line + "\n";
+                    foreach (var item in values)
+                    {
+                        line = readFile.ReadLine() + "," + classInfo[item.country]["Recall"];
+                        newText += line + "\n";
+
+                    }
+                }
+                var file = new System.IO.StreamWriter(path);
+                file.Write(newText);
+                return file;
+
+            }
+            else
+            {
+                var file = new System.IO.StreamWriter(path);
+                file.WriteLine($"country,{settings.Neighbours}");
+                foreach (var item in values)
+                {
+                    file.WriteLine($"{item.country},{classInfo[item.country]["Recall"]}");
+                }
+
+                return file;
+            }
+        }
+
+        private System.IO.StreamWriter GenerateAccuracyData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        {
+            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Accuracy.csv";
             var allArticles = 0.0;
             foreach (var item in classInfo)
             {
@@ -118,12 +192,41 @@ namespace KSR.Logic
                         allArticles += val.Value;
                 }
             }
-            foreach (var item in values)
+            if (File.Exists(path))
             {
-                file.WriteLine($"{item.country},{item.trues},{item.falses},{classInfo[item.country]["FN"]},{(allArticles - classInfo[item.country]["FN"] - item.falses) - item.trues},{(allArticles - classInfo[item.country]["FN"] - item.falses) / (allArticles)},{item.precision},{classInfo[item.country]["Recall"]}");
-            }
+                string line = "";
+                string newText = "";
+                using (var readFile = new System.IO.StreamReader(path))
+                {
+                    line = readFile.ReadLine() + "," + settings.Neighbours;
+                    newText += line + "\n";
+                    foreach (var item in values)
+                    {
+                        line = readFile.ReadLine() + "," + (allArticles - classInfo[item.country]["FN"] - item.falses) / (allArticles);
+                        newText += line + "\n";
 
-            return file;
+                    }
+                }
+                var file = new System.IO.StreamWriter(path);
+                file.Write(newText);
+                return file;
+
+            }
+            else
+            {
+
+                var file = new System.IO.StreamWriter(path);
+                file.WriteLine($"country,{settings.Neighbours}");
+
+
+
+                foreach (var item in values)
+                {
+                    file.WriteLine($"{item.country},{(allArticles - classInfo[item.country]["FN"] - item.falses) / (allArticles)}");
+                }
+
+                return file;
+            }
         }
 
         private System.IO.StreamWriter GenerateLatexFormatTable(List<(string country, int trues, int falses, double prescision)> values, Dictionary<string, Dictionary<string, double>> clasinfo, Settings settings)
