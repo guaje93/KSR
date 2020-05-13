@@ -35,14 +35,14 @@ namespace KSR.Logic
                     break;
             }
         }
-        
+
 
         private void CheckMatch(IEnumerable<Article> testArticles, Settings settings)
         {
             var classificationInfos = new List<ClassificationInfo>();
 
             Dictionary<string, int> assignAmounts = new Dictionary<string, int>();
-            var grouppedPlaces = testArticles.GroupBy(x => x.Place).OrderBy(x=> x.Key);
+            var grouppedPlaces = testArticles.GroupBy(x => x.Place).OrderBy(x => x.Key);
             var assigned = new Dictionary<string, int>();
             var FalsePositive = new Dictionary<string, int>();
             var TruePositive = new Dictionary<string, int>();
@@ -97,8 +97,8 @@ namespace KSR.Logic
                 Values.Add((item.Key, trues, falses, 1.0 * trues / (trues + falses)));
             }
 
-          //  using var file = SaveFile(classificationInfos, Values, classInfo, settings);
-          //  using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
+            using var file = SaveFile(classificationInfos, Values, classInfo, settings);
+            using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
             using var excelData = GenerateExcelData(Values, classInfo, settings);
 
         }
@@ -108,11 +108,19 @@ namespace KSR.Logic
             var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_{settings.Neighbours}.csv";
             var file = new System.IO.StreamWriter(path);
 
-            file.WriteLine("country,trues,falses,precision,falseNegative,recall");
-
+            file.WriteLine("country,TP,FP,FN,TN,accuracy,precision,recall");
+            var allArticles = 0.0;
+            foreach (var item in classInfo)
+            {
+                foreach (var val in item.Value)
+                {
+                    if (val.Key != "FN" && val.Key != "Recall")
+                        allArticles += val.Value;
+                }
+            }
             foreach (var item in values)
             {
-            file.WriteLine($"{item.country},{item.trues},{item.falses},{item.precision},{classInfo[item.country]["FN"]},{classInfo[item.country]["Recall"]}");
+                file.WriteLine($"{item.country},{item.trues},{item.falses},{classInfo[item.country]["FN"]},{(allArticles - classInfo[item.country]["FN"] - item.falses) - item.trues},{(allArticles - classInfo[item.country]["FN"] - item.falses) / (allArticles)},{item.precision},{classInfo[item.country]["Recall"]}");
             }
 
             return file;
@@ -123,7 +131,7 @@ namespace KSR.Logic
             var path = $"{_latexTablePath}{settings.Metric}_{settings.TrainingSet}_{settings.Neighbours}.txt";
             var file = new System.IO.StreamWriter(path);
             var tableHeader = $"\\subsubsection{{Metryka {settings.Metric} dla {settings.Neighbours} sąsiadów, zbiór treningowy {settings.TrainingSet * 100}\\%}} \n\n " +
-                $"Zbiór treningowy - {settings.TrainingSet*100} [\\%] \n Zbiór testowy - { 100 - settings.TrainingSet * 100} [\\%]\n \\begin{{table}}[H] \n " +
+                $"Zbiór treningowy - {settings.TrainingSet * 100} [\\%] \n Zbiór testowy - { 100 - settings.TrainingSet * 100} [\\%]\n \\begin{{table}}[H] \n " +
                 $"\\centering \n\\begin{{tabular}}{{|| c c c c c c c c c||}} \n \\hline \n-";
             var resultString = tableHeader;
             //var resultString = "\\begin{tabular}{||c c c c c c c c c||} \n \\hline \n-";
@@ -159,7 +167,7 @@ namespace KSR.Logic
                 resultString += $" & {Math.Round(elem.prescision, 2)}";
             }
             resultString += " & - & -\\\\[1ex]";
-            resultString += $"\n \\hline\n \\end{{tabular}} \n \\caption{{Trafność klasyfikacji dla metryki {settings.Metric}, {settings.Neighbours} sąsiadów oraz kategorii places, zbiór treningowy {settings.TrainingSet*100}\\%}}";
+            resultString += $"\n \\hline\n \\end{{tabular}} \n \\caption{{Trafność klasyfikacji dla metryki {settings.Metric}, {settings.Neighbours} sąsiadów oraz kategorii places, zbiór treningowy {settings.TrainingSet * 100}\\%}}";
 
 
             double properlyClassified = 0;
