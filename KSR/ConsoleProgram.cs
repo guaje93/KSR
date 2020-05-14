@@ -52,7 +52,7 @@ namespace KSR
         {
             var metrics = new List<string>() { "Chebyshev", "Euclidean", "Manhattan" };
             var neighbours = new List<int>() { 1, 3, 5, 7, 9, 12, 15, 17, 20, 25 };
-            var trainingsets = new List<double>() { 0.4, 0.6, 0.8 };
+            var trainingsets = new List<double>() {0.2, 0.4,0.5, 0.6, 0.8 };
 
             string path = $@"C:\Users\{Environment.UserName}\Desktop\appset\";
 
