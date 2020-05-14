@@ -97,18 +97,25 @@ namespace KSR.Logic
                 var falses = FalsePositive.FirstOrDefault(p => p.Key == item.Key).Value;
                 Values.Add((item.Key, trues, falses, 1.0 * trues / (trues + falses)));
             }
-
+            string path1 = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}";
+            string path2 = $"{_outputPath}M_{settings.Neighbours}_{settings.TrainingSet}";
+            string path3 = $"{_outputPath}S_{settings.Metric}_{settings.Neighbours}";
             using var file = SaveFile(classificationInfos, Values, classInfo, settings);
             using var latexTable = GenerateLatexFormatTable(Values, classInfo, settings);
-            using var pData = GeneratePrecisionData(Values, classInfo, settings);
-            using var rData = GenerateRecallData(Values, classInfo, settings);
-            using var aData = GenerateAccuracyData(Values, classInfo, settings);
-
+            using var pData1 = GeneratePrecisionData(path1, Values, classInfo, settings);
+            using var rData1 = GenerateRecallData(path1, Values, classInfo, settings);
+            using var aData1 = GenerateAccuracyData(path1, Values, classInfo, settings);
+            using var pData2 = GeneratePrecisionData(path2, Values, classInfo, settings);
+            using var rData2 = GenerateRecallData(path2, Values, classInfo, settings);
+            using var aData2 = GenerateAccuracyData(path2, Values, classInfo, settings);
+            using var pData3 = GeneratePrecisionData(path3, Values, classInfo, settings);
+            using var rData3 = GenerateRecallData(path3, Values, classInfo, settings);
+            using var aData3 = GenerateAccuracyData(path3, Values, classInfo, settings);
         }
 
-        private System.IO.StreamWriter GeneratePrecisionData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        private System.IO.StreamWriter GeneratePrecisionData(string path, List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
         {
-            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Precision.csv";
+            path += "precision.csv";
             if (File.Exists(path))
             {
                 string line = "";
@@ -143,10 +150,9 @@ namespace KSR.Logic
             }
         }
 
-        private System.IO.StreamWriter GenerateRecallData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        private System.IO.StreamWriter GenerateRecallData(string path, List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
         {
-            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Recall.csv";
-
+            path += "recall.csv";
             if (File.Exists(path))
             {
                 string line = "";
@@ -180,9 +186,9 @@ namespace KSR.Logic
             }
         }
 
-        private System.IO.StreamWriter GenerateAccuracyData(List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
+        private System.IO.StreamWriter GenerateAccuracyData(string path, List<(string country, int trues, int falses, double precision)> values, Dictionary<string, Dictionary<string, double>> classInfo, Settings settings)
         {
-            var path = $"{_outputPath}{settings.Metric}_{settings.TrainingSet}_Accuracy.csv";
+            path += "accuracy.csv";
             var allArticles = 0.0;
             foreach (var item in classInfo)
             {

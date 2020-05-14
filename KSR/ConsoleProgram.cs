@@ -12,7 +12,7 @@ namespace KSR
         static void Main(string[] args)
         {
             GenerateAppSettingsJson();
-            for (int i = 0; i < 10; i+=3)
+            for (int i = 0; i < 60; i++)
             {
 
                 var settings = ReadInitialValues(i);
