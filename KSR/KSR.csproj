@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AppSettings\" />
     <Folder Include="View\" />
   </ItemGroup>
 
