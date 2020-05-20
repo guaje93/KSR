@@ -11,6 +11,16 @@ namespace KSR.Logic.Knn
         #region Fields
 
         private IMetric _metric;
+        private readonly KnnAlgorithm _knnAlgorithm;
+
+        #endregion
+
+        #region Constructors
+
+        public KnnProcessor()
+        {
+            _knnAlgorithm = new KnnAlgorithm();
+        }
 
         #endregion
 
@@ -19,7 +29,12 @@ namespace KSR.Logic.Knn
         public void Calculate(string metric, List<Article> trainingArticles, List<Article> testArticles, Settings settings)
         {
             SetMetric(metric);
-            _metric.Calculate(trainingArticles, testArticles, settings.Neighbours);
+            for (int i = 0; i < testArticles.Count; i++)
+            {
+                _metric.Calculate(trainingArticles, testArticles.ElementAt(i), settings.Neighbours);
+                _knnAlgorithm.AssignCountry(testArticles.ElementAt(i), trainingArticles, settings.Neighbours);
+            }
+
             SaveMatchData(testArticles, settings);
         }
 

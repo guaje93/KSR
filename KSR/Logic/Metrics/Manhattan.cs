@@ -10,12 +10,9 @@ namespace KSR.Logic.Metric
     {
         #region Public Methods
 
-        public void Calculate(List<Article> TrainingVectors, List<Article> TestVectors, int kNeighbours)
+        public void Calculate(List<Article> TrainingVectors, Article TestVector, int kNeighbours)
         {
-            for (int i = 0; i < TestVectors.Count; i++)
-            {
-                CalculateMetricForOneTestSet(TestVectors.ElementAt(i), TrainingVectors, kNeighbours);
-            }
+                CalculateMetricForOneTestSet(TestVector, TrainingVectors, kNeighbours);
 
             var test = TrainingVectors.GroupBy(p => p.Distance);
         }
@@ -25,7 +22,7 @@ namespace KSR.Logic.Metric
         #region Private Methods
 
 
-        public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
+        private void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
         {
             double distance = 0;
             for (int i = 0; i < TrainingVectors.Count; i++)
@@ -48,8 +45,6 @@ namespace KSR.Logic.Metric
                 distance = resultList.Sum();
                 TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
             }
-
-            KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace KSR
+namespace KSR.Logic.Keywords
 {
     public interface IKeywords
     {

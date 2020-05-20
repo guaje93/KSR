@@ -1,171 +1,150 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
-  <Class Name="KSR.KeyWordsCountExtractor" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="13.5" Width="2.25" />
-    <Members>
-      <Method Name="KeyWordsCountExtractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.ConsoleProgram">
+    <Position X="54" Y="4.5" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\01_KeyWordsCountExtractor.cs</FileName>
+      <HashCode>IAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ConsoleProgram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Keywords.KeyWordsHandler" BaseTypeListCollapsed="true">
+    <Position X="62.5" Y="9" Width="10" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAEAAAAAAAgAA=</HashCode>
+      <FileName>Logic\KeyWordsHandler.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="KSR.Article">
-    <Position X="9.25" Y="3.75" Width="3.25" />
+  <Class Name="KSR.Model.Article">
+    <Position X="48.75" Y="6.75" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAIAAAAAAAAAAAAAAEAACAEAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAEAAAAIAAAAAAAAAAABAAEAACAEAAAg=</HashCode>
       <FileName>Model\Article.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KSR.Extractors.LengthFrom4To6Extractor" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="8.5" Width="2.25" />
-    <Members>
-      <Method Name="LengthFrom4To6Extractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.Model.ClassificationInfo">
+    <Position X="61.5" Y="17.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\04_FirstCapitalLengthFrom4To6Extractor.cs</FileName>
+      <HashCode>AAAAAAGAAAAAAAAAgMAAAAAAAAIEAAAAAQYAAAAAAgA=</HashCode>
+      <FileName>Model\ClassificationInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Model.ExtractorVector">
+    <Position X="69.25" Y="4" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AgCACAQAAAAAIAAAAAgBAAgAAAAAAAIAAAAEAIAAABA=</HashCode>
+      <FileName>Model\ExtractorVector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Model.Settings">
+    <Position X="49.5" Y="19.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAgAAAABAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Helpers.AppSettingsGenerator" Collapsed="true">
+    <Position X="60.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAEAAIAA=</HashCode>
+      <FileName>Logic\Helpers\AppSettingsGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Helpers.ChartDataGenerator">
+    <Position X="49.5" Y="16.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAABAAAAAAAABAAAAAAAgAACAAAABAAIAAgAAAA=</HashCode>
+      <FileName>Logic\Helpers\ChartDataGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Helpers.FilesContentParser">
+    <Position X="59" Y="8.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAIAAAAAAAAAAAAAQAAAAgAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\Helpers\FilesContentParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Helpers.SgmFileLoader">
+    <Position X="59" Y="6.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Logic\Helpers\SgmFileLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KSR.Logic.Metric.Chebyshev" BaseTypeListCollapsed="true">
+    <Position X="52" Y="12.5" Width="6.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\Metrics\Chebyshev.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="KSR.Extractors.ShorterThan4Extractor" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="8.5" Width="2" />
-    <Members>
-      <Method Name="ShorterThan4Extractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.Logic.Metric.Euclidean" BaseTypeListCollapsed="true">
+    <Position X="55.5" Y="14.25" Width="6.75" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\03_FirstCapitalShorterThan4Extractor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\Metrics\Euclidean.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="KSR.Extractors.MeanKeyWordLengthExtractor" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="8.5" Width="2.75" />
-    <Members>
-      <Method Name="MeanKeyWordLengthExtractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.Logic.Metric.Manhattan" BaseTypeListCollapsed="true">
+    <Position X="47" Y="14.25" Width="7" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\02_MeanKeyWordLengthExtractor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\Metrics\Manhattan.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="KSR.Extractors.UniqueWordsExtractor" BaseTypeListCollapsed="true">
-    <Position X="6" Y="8.5" Width="2" />
-    <Members>
-      <Method Name="UniqueWordsExtractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.Logic.Articles.AtricleRepository">
+    <Position X="54" Y="6.75" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\12_UniqueWordsExtractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.AtricleRepository">
-    <Position X="4.25" Y="0.5" Width="3.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAEAIAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQCAEAIAAAIAAAAAAAAAAAAABAQAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Logic\AtricleRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KSR.Extractors.DashSeparatedKeyWordsExtractor" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="13.5" Width="2.75" />
-    <Members>
-      <Method Name="DashSeparatedKeyWordsExtractor" Hidden="true" />
-    </Members>
+  <Class Name="KSR.Logic.Knn.KnnAlgorithm">
+    <Position X="54.25" Y="21" Width="5.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="KSR.Logic.Knn.KnnAlgorithm.Result">
+        <TypeIdentifier>
+          <NewMemberFileName>Logic\KnnAlgorithm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\06_DashSeparatedKeyWordsExtractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.LongerThan8Extractor" BaseTypeListCollapsed="true">
-    <Position X="7.75" Y="18.5" Width="2" />
-    <Members>
-      <Method Name="LongerThan8Extractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\05_KeyWordsLongerThan8Extractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.KeyWordsWithAllCapitalLettersExtractor" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="18.5" Width="3" />
-    <Members>
-      <Method Name="KeyWordsWithAllCapitalLettersExtractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\09_KeyWordsWithAllCapitalLettersExtractor.cs</FileName>
-      <NewMemberFileName>Logic\Extractors\10_KeyWordsStartedWithFirstCapitalExtractor.cs</NewMemberFileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.ContainsKeywordExtractor" BaseTypeListCollapsed="true">
-    <Position X="10.25" Y="18.5" Width="2.25" />
-    <Members>
-      <Method Name="ContainsKeywordExtractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\08_ContainsKeyWordExtractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.FirstKeywordPositionExtractor" BaseTypeListCollapsed="true">
-    <Position X="3.5" Y="13.5" Width="2.5" />
-    <Members>
-      <Method Name="FirstKeywordPositionExtractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\07_FirstKeywordPositionExtractor - Copy.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.KeyWordsStartedWithFirstCapitalExtractor" BaseTypeListCollapsed="true">
-    <Position X="4.25" Y="18.5" Width="3" />
-    <Members>
-      <Method Name="KeyWordsStartedWithFirstCapitalExtractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\10_KeyWordsStartedWithFirstCapitalExtractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.Extractors.KeyWordsStartedWithFirstLowerExtractor" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="13.5" Width="3.25" />
-    <Members>
-      <Method Name="KeyWordsStartedWithFirstLowerExtractor" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAQAAAAEAAAAQAAAAAAAAAAAAAQAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\11_KeyWordsStartedWithFirstLowerExtractor.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="KSR.FileLoader">
-    <Position X="4.25" Y="3.75" Width="3.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>Logic\FileLoader.cs</FileName>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\KnnAlgorithm.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="KSR.FilesContentParser">
-    <Position X="9.25" Y="0.5" Width="3.25" />
+  <Class Name="KSR.Logic.Knn.KnnProcessor">
+    <Position X="53.75" Y="18" Width="6.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAIAAAAAAAAAAAAAQAAAAgAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Logic\FilesContentParser.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAACAAAACAAAACAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Logic\KnnProcessor.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="KSR.IExtractor">
-    <Position X="6" Y="16" Width="1.5" />
+  <Class Name="KSR.Logic.VectorFeatureCreator">
+    <Position X="62.5" Y="4" Width="4.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Logic\Extractors\IExtractor.cs</FileName>
+      <HashCode>AAAAAAAAAEAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\VectorFeatureCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="KSR.Logic.Keywords.IKeywords">
+    <Position X="63.5" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Logic\IKeywords.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="KSR.Logic.Metric.IMetric">
+    <Position X="54.5" Y="16.25" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\Metrics\IMetric.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

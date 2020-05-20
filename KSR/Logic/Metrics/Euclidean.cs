@@ -11,13 +11,9 @@ namespace KSR.Logic.Metric
     {
         #region Public Methods
 
-        public void Calculate(List<Article> TrainingVectors, List<Article> TestVectors, int kNeighbours)
+        public void Calculate(List<Article> TrainingVectors, Article TestVector, int kNeighbours)
         {
-            for (int i = 0; i < TestVectors.Count; i++)
-            {
-                CalculateMetricForOneTestSet(TestVectors.ElementAt(i), TrainingVectors, kNeighbours);
-            }
-
+                CalculateMetricForOneTestSet(TestVector, TrainingVectors, kNeighbours);
         }
 
         #endregion
@@ -50,7 +46,6 @@ namespace KSR.Logic.Metric
                 TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
             }
 
-            KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
 
         #endregion

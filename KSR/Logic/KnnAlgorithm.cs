@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace KSR.Logic.Knn
 {
-    public static class KnnAlgorithm
+    public class KnnAlgorithm
     {
         #region Public Methods
 
-        public static void AssignCountry(Article testArticle, List<Article> TrainingArticles, int neighboursAmount)
+        public void AssignCountry(Article testArticle, List<Article> TrainingArticles, int neighboursAmount)
         {
             TrainingArticles = TrainingArticles.OrderBy(h => h.Distance).ToList(); //sortuje
             var neighbours = TrainingArticles.Take(neighboursAmount).ToList(); //bierze k sąsiadów

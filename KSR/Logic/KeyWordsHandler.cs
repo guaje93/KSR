@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR.Logic
+namespace KSR.Logic.Keywords
 {
     public class KeyWordsHandler : IKeywords
     {

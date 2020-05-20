@@ -1,4 +1,5 @@
 ﻿using KSR.Logic.Extractors;
+using KSR.Logic.Keywords;
 using KSR.Model;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace KSR.Logic
 
         #region Constructors
 
-        public VectorFeatureCreator(KeyWordsHandler keyWords, Settings settings)
+        public VectorFeatureCreator(IKeywords keyWords, Settings settings)
         {
             this._keyWords = keyWords;
             this._settings = settings;
