@@ -1,12 +1,14 @@
-﻿using KSR;
+﻿using KSR.Logic.Knn;
+using KSR.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logic.Metrics
+namespace KSR.Logic.Metric
 {
     public class Manhattan : IMetric
     {
+        #region Public Methods
 
         public void Calculate(List<Article> TrainingVectors, List<Article> TestVectors, int kNeighbours)
         {
@@ -17,6 +19,11 @@ namespace Logic.Metrics
 
             var test = TrainingVectors.GroupBy(p => p.Distance);
         }
+
+        #endregion
+
+        #region Private Methods
+
 
         public void CalculateMetricForOneTestSet(Article testArticle, List<Article> TrainingVectors, int kNeighbours)
         {
@@ -45,5 +52,6 @@ namespace Logic.Metrics
             KnnAlgorithm.AssignCountry(testArticle, TrainingVectors, kNeighbours);
         }
 
+        #endregion
     }
 }

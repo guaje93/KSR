@@ -1,17 +1,29 @@
-﻿using KSR.Extractors;
+﻿using KSR.Logic.Extractors;
+using KSR.Model;
 using System.Collections.Generic;
 
-namespace KSR.Model
+namespace KSR.Logic
 {
     public class VectorFeatureCreator
     {
+        #region Fields
+
         private IKeywords _keyWords;
         private Settings _settings;
-        public VectorFeatureCreator(KeyWords keyWords, Settings settings)
+
+        #endregion
+
+        #region Constructors
+
+        public VectorFeatureCreator(KeyWordsHandler keyWords, Settings settings)
         {
             this._keyWords = keyWords;
             this._settings = settings;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void CreateVectorFeature(List<Article> articles)
         {
@@ -85,5 +97,7 @@ namespace KSR.Model
                 };
             };
         }
+
+        #endregion
     }
 }

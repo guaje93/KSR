@@ -1,11 +1,12 @@
-﻿using System;
+﻿using KSR.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace KSR
+namespace KSR.Logic.Helpers
 {
     public class FilesContentParser
     {
@@ -20,6 +21,8 @@ namespace KSR
         public IEnumerable<Article> Articles { get; private set; } = new List<Article>();
 
         #endregion
+
+        #region Public Methods
 
         public bool ReadArticlesFromFiles(string[] files)
         {
@@ -38,6 +41,10 @@ namespace KSR
             return true;
         }
 
+        #endregion
+
+        #region Private Methods
+
         private Article GetArticleFromXml(string p)
         {
             var xmlDocument = new XmlDocument();
@@ -55,5 +62,7 @@ namespace KSR
         }
 
         private bool IsArticleValid(Article p) => p != null && places.Contains(p.Place);
+
+        #endregion
     }
 }

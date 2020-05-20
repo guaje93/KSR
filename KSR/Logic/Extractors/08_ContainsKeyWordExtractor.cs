@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR.Extractors
+namespace KSR.Logic.Extractors
 {
-    class ContainsKeywordExtractor : IExtractor
+    public class ContainsKeywordExtractor : IExtractor
     {
-        public bool Result = false;
+        #region Properties
+
+        public bool Result { get; private set; } = false;
+
+        #endregion
+
+        #region Public Methods
 
         public void Extract(IList<string> keywords, IList<string> textWords)
         {
             Result = textWords.Any(p => keywords.Contains(p));
         }
+
+        #endregion
     }
 }

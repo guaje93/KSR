@@ -2,6 +2,8 @@
 {
     public class Measures
     {
+        #region Properties
+
         public bool KeyWordsCount { get; set; }
         public bool MeanKeyWordLength { get; set; }
         public bool FirstCapitalShorterThan4 { get; set; }
@@ -14,5 +16,7 @@
         public bool KeyWordsStartedWithFirstCapital { get; set; }
         public bool KeyWordsStartedWithFirstLower { get; set; }
         public bool UniqueWords { get; set; }
+
+        #endregion
     }
 }

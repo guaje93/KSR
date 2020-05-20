@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace KSR
+namespace KSR.Logic.Helpers
 {
     public class SgmFileLoader
     {

@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR.Extractors
+namespace KSR.Logic.Extractors
 {
-    class MeanKeyWordLengthExtractor : IExtractor
+    public class MeanKeyWordLengthExtractor : IExtractor
     {
-        public double Result = 0;
+        #region Properties
+
+        public double Result { get; private set; } = 0;
+
+        #endregion
+
+        #region Public Methods
 
         public void Extract(IList<string> keywords, IList<string> textWords)
         {
@@ -15,5 +21,7 @@ namespace KSR.Extractors
                 return;
             Result = Math.Round(filteredWords.Select(p => p.Length).Average(), 1) * 1.0 / textWords.Count();
         }
+
+        #endregion
     }
 }

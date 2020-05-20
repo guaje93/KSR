@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR.Extractors
+namespace KSR.Logic.Extractors
 {
-    class KeyWordsStartedWithFirstLowerExtractor : IExtractor
+    public class KeyWordsStartedWithFirstLowerExtractor : IExtractor
     {
+        #region Properties
+
         public double Result = 0;
+
+        #endregion
+
+        #region Public Methods
 
         public void Extract(IList<string> keywords, IList<string> textWords)
         {
@@ -14,6 +20,8 @@ namespace KSR.Extractors
                                       .Where(p => keywords.Where(kw => Char.IsLower(kw.First())).Contains(p))
                                       .Count() * 1.0 / textWords.Count();
         }
+
+        #endregion
     }
 }
 

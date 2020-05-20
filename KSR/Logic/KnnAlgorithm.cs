@@ -1,11 +1,14 @@
 ﻿using KSR;
+using KSR.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Logic
+namespace KSR.Logic.Knn
 {
     public static class KnnAlgorithm
     {
+        #region Public Methods
+
         public static void AssignCountry(Article testArticle, List<Article> TrainingArticles, int neighboursAmount)
         {
             TrainingArticles = TrainingArticles.OrderBy(h => h.Distance).ToList(); //sortuje
@@ -24,10 +27,16 @@ namespace Logic
             testArticle.AssignedPlace = results.FirstOrDefault().Country;
         }
 
-        class Result
+        #endregion
+
+        #region Private classes
+
+        private class Result
         {
             public string Country { get; set; }
             public int Occurence { get; set; }
         }
+
+        #endregion
     }
 }

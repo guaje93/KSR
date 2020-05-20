@@ -6,13 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Annytab.Stemmer" Version="1.2.4" />
     <PackageReference Include="dotnet-stop-words" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="AppSettings\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

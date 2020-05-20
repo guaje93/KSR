@@ -1,4 +1,5 @@
 ﻿using Annytab.Stemmer;
+using KSR.Logic.Helpers;
 using KSR.Model;
 using StopWord;
 using System;
@@ -6,11 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace KSR
+namespace KSR.Logic.Articles
 {
     public class AtricleRepository
     {
+        #region Fields
+
         private readonly Stemmer englishStemmer = new EnglishStemmer();
+
+        #endregion
+
+        #region Properties
 
         public List<Article> Articles { get; set; }
 
@@ -25,6 +32,10 @@ namespace KSR
             get;
             private set;
         } = new List<Article>();
+
+        #endregion
+
+        #region Public Methods
 
         public bool CompleteRepository(string directoryPath)
         {
@@ -62,6 +73,10 @@ namespace KSR
             ArticlesForValidation = Articles.Where(p => !ArticlesForLearning.Contains(p)).ToList();
         }
 
+        #endregion
+
+        #region Private Methods
+
         private bool ExtractAndFilterWords()
         {
             foreach (var article in Articles)
@@ -93,5 +108,7 @@ namespace KSR
 
             return words.ToList();
         }
+
+        #endregion
     }
 }

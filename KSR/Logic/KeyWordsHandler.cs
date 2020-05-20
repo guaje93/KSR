@@ -1,20 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using KSR.Model;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR
+namespace KSR.Logic
 {
-    public class KeyWords : IKeywords
+    public class KeyWordsHandler : IKeywords
     {
+        #region Properties
+
         public IList<string> Keywords
         {
             get;
             private set;
         } = new List<string>();
 
-        public KeyWords(List<Article> testArticles)
+        #endregion
+
+        #region Constructors
+
+        public KeyWordsHandler(List<Article> testArticles)
         {
             Dictionary<string, Dictionary<string, double>> allWords = GetAllWordsPerCountry(testArticles);
-            Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords = GetFilteredKeyWords(testArticles, allWords);
+            Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords = GetFilteredKeyWordsPerCountry(testArticles, allWords);
             Dictionary<string, int> keyWordsAmount = GetKeyWordsByAmount(orderedFilteredKeyWords);
 
             Dictionary<string, int> wordInDifferentCountries = new Dictionary<string, int>();
@@ -29,17 +36,20 @@ namespace KSR
 
                 }
             }
-
-
-            var keyWordsThatExistInLessThen4Countries = wordInDifferentCountries.Where(p => p.Value < 6).Select(p => p.Key).ToList();
-            var filtered = orderedFilteredKeyWords.ToDictionary(p => p.Key, q => q.Value.Select(p => p.Key).Where(p => keyWordsThatExistInLessThen4Countries.Contains(p)));
+            
+            var keyWordsThatExistInLessThen6Countries = wordInDifferentCountries.Where(p => p.Value < 6).Select(p => p.Key).ToList();
+            var filtered = orderedFilteredKeyWords.ToDictionary(p => p.Key, q => q.Value.Select(p => p.Key).Where(p => keyWordsThatExistInLessThen6Countries.Contains(p)));
             foreach (var country in filtered)
             {
                 Keywords = Keywords.Concat(country.Value.Take(5)).ToList();
             }
         }
 
-        private static Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords)
+        #endregion
+
+        #region Private Methods
+
+        private Dictionary<string, int> GetKeyWordsByAmount(Dictionary<string, Dictionary<string, double>> orderedFilteredKeyWords)
         {
             var keyWordsAmount = new Dictionary<string, int>();
             foreach (var item in orderedFilteredKeyWords)
@@ -57,7 +67,7 @@ namespace KSR
             return keyWordsAmount;
         }
 
-        private static Dictionary<string, Dictionary<string, double>> GetFilteredKeyWords(List<Article> testArticles, Dictionary<string, Dictionary<string, double>> allWords)
+        private Dictionary<string, Dictionary<string, double>> GetFilteredKeyWordsPerCountry(List<Article> testArticles, Dictionary<string, Dictionary<string, double>> allWords)
         {
             var orderedFilteredKeyWords = new Dictionary<string, Dictionary<string, double>>();
             foreach (var item in allWords)
@@ -68,21 +78,10 @@ namespace KSR
                                                          .ToDictionary(p => p.Key, g => g.Value));
             }
 
-
-            //var wordsAndamount = new Dictionary<string, int>();
-            //foreach(var item in orderedFilteredKeyWords)
-            //{
-            //    //foreach(var item.Key in item){
-
-            //    //var amount = testArticles.Where(x => x.AllWords.Contains(item.Key)).Count();
-            //    //wordsAndamount.Add(i)
-            //    //}
-            //}
-
             return orderedFilteredKeyWords;
         }
 
-        private static Dictionary<string, Dictionary<string, double>> GetAllWordsPerCountry(List<Article> testArticles)
+        private Dictionary<string, Dictionary<string, double>> GetAllWordsPerCountry(List<Article> testArticles)
         {
             var allWords = new Dictionary<string, Dictionary<string, double>>();
 
@@ -110,5 +109,7 @@ namespace KSR
 
             return allWords;
         }
+
+        #endregion
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace KSR
+﻿namespace KSR.Model
 {
     public class ExtractorVector
     {
+        #region Fields
+
         private double _keyWordsCountExtractor;
         private double _meanKeyWordLengthExtractor;
         private double _shorterThan4Extractor;
@@ -15,6 +17,10 @@
         private double _keyWordsStartedWithFirstLowerExtractor;
         private double _UniqueWordsExtractor;
 
+        #endregion
+
+        #region Properties
+
         public double KeyWordsCountExtractor { get => _keyWordsCountExtractor; set => _keyWordsCountExtractor = value; }
         public double MeanKeyWordLengthExtractor { get => _meanKeyWordLengthExtractor; set => _meanKeyWordLengthExtractor = value; }
         public double ShorterThan4Extractor { get => _shorterThan4Extractor; set => _shorterThan4Extractor = value; }
@@ -27,5 +33,7 @@
         public double KeyWordsStartedWithFirstCapitalExtractor { get => _keyWordsStartedWithFirstCapitalExtractor; set => _keyWordsStartedWithFirstCapitalExtractor = value; }
         public double KeyWordsStartedWithFirstLowerExtractor { get => _keyWordsStartedWithFirstLowerExtractor; set => _keyWordsStartedWithFirstLowerExtractor = value; }
         public double UniqueWordsExtractor { get => _UniqueWordsExtractor; set => _UniqueWordsExtractor = value; }
+
+        #endregion
     }
 }

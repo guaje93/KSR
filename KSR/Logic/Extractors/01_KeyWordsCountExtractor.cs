@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace KSR
+namespace KSR.Logic.Extractors
 {
-    class KeyWordsCountExtractor : IExtractor
+    public class KeyWordsCountExtractor : IExtractor
     {
-        public double Result = 0;
+        #region Properties
+
+        public double Result { get; private set; } = 0;
+
+        #endregion
+
+        #region Public Methods
 
         public void Extract(IList<string> keywords, IList<string> textWords)
         {
@@ -19,5 +25,7 @@ namespace KSR
 
             Result = foundKeyWords * 1.0 / keywords.Distinct().Count();
         }
+
+        #endregion
     }
 }
