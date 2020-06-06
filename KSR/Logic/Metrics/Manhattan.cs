@@ -43,7 +43,7 @@ namespace KSR.Logic.Metric
             };
 
                 distance = resultList.Sum();
-                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(distance);
+                TrainingVectors.ElementAt(i).Distance = distance;
             }
         }
 

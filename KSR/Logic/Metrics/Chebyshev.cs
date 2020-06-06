@@ -39,7 +39,7 @@ namespace KSR.Logic.Metric
                    Math.Abs(testArticle.VectorFeatures.UniqueWordsExtractor - TrainingVectors.ElementAt(i).VectorFeatures.UniqueWordsExtractor)
             };
                 var maxResult = resultList.Max();
-                TrainingVectors.ElementAt(i).Distance = Math.Sqrt(maxResult);
+                TrainingVectors.ElementAt(i).Distance = maxResult;
             }
         }
 
